@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Juris Consultas – Dr. Sergio Iván Cej | Abogado Penalista | San Nicolás de los Arroyos</title>
+  <meta name="description" content="Estudio jurídico del Dr. Sergio Iván Cej, abogado penalista y especialista en cibercrimen con Maestría en Ciberseguridad. Radicado en San Nicolás de los Arroyos, Buenos Aires, Argentina." />
+  <meta name="keywords" content="abogado penalista San Nicolás de los Arroyos, cibercrimen, derecho penal, ciberdelitos, derecho laboral, derecho civil, ciudadanía italiana, ciudadanía española, Sergio Cej, Juris Consultas" />
+  <meta name="author" content="Dr. Sergio Iván Cej" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Juris Consultas – Dr. Sergio Iván Cej | Abogado Penalista" />
+  <meta property="og:description" content="Estudio jurídico especializado en Derecho Penal y Cibercrimen. San Nicolás de los Arroyos, Buenos Aires." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_AR" />
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Google Fonts: Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 6 Free -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    /* ============================================================
+       CUSTOM PROPERTIES
+    ============================================================ */
+    :root {
+      --bg:         #0a0a0a;
+      --surface:    #111111;
+      --surface2:   #1a1a1a;
+      --border:     #222222;
+      --border2:    #2e2e2e;
+      --text:       #f5f5f5;
+      --text-muted: #888888;
+      --gold:       #C9A84C;
+      --gold-hover: #e0bc6a;
+      --gold-dim:   rgba(201, 168, 76, 0.12);
+      --gold-glow:  rgba(201, 168, 76, 0.25);
+      --white:      #ffffff;
+      --wa-green:   #25D366;
+      --radius:     8px;
+      --radius-lg:  16px;
+      --transition: 0.3s ease;
+      --shadow:     0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a   { text-decoration: none; color: inherit; }
+    ul  { list-style: none; }
+
+    /* ============================================================
+       SCROLL ANIMATION CLASSES
+    ============================================================ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Staggered delay for card grids */
+    .fade-in:nth-child(1) { transition-delay: 0.05s; }
+    .fade-in:nth-child(2) { transition-delay: 0.15s; }
+    .fade-in:nth-child(3) { transition-delay: 0.25s; }
+    .fade-in:nth-child(4) { transition-delay: 0.35s; }
+    .fade-in:nth-child(5) { transition-delay: 0.45s; }
+
+    /* ============================================================
+       LAYOUT HELPERS
+    ============================================================ */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section {
+      padding: 90px 0;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+    }
+
+    .gold-rule {
+      width: 48px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      margin: 1.25rem 0 2.5rem;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 0;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+
+    .navbar.scrolled {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    .navbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar__logo {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--text);
+    }
+
+    .navbar__logo span {
+      color: var(--gold);
+    }
+
+    .navbar__nav {
+      display: none;
+      gap: 2rem;
+    }
+
+    .navbar__nav a {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+
+    .navbar__nav a:hover {
+      color: var(--gold);
+    }
+
+    .navbar__cta {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gold);
+      color: #000;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.55rem 1.2rem;
+      border-radius: var(--radius);
+      transition: background var(--transition);
+    }
+
+    .navbar__cta:hover {
+      background: var(--gold-hover);
+    }
+
+    @media (min-width: 768px) {
+      .navbar__nav  { display: flex; }
+      .navbar__cta  { display: flex; }
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 120px 1.25rem 80px;
+    }
+
+    /* Subtle radial gradient backdrop */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201, 168, 76, 0.06) 0%, transparent 70%),
+        linear-gradient(180deg, #0d0d0d 0%, #0a0a0a 100%);
+      pointer-events: none;
+    }
+
+    /* Thin horizontal gold line */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .hero__content {
+      position: relative;
+      max-width: 780px;
+    }
+
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero__eyebrow::before,
+    .hero__eyebrow::after {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    .hero__title {
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero__title span {
+      color: var(--gold);
+    }
+
+    .hero__subtitle {
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero__tagline {
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero__tagline span {
+      color: var(--gold);
+      opacity: 0.8;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--gold);
+      color: #000;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 0 0 0 var(--gold-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px var(--gold-glow);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border2);
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition), transform var(--transition);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    /* Scroll down chevron */
+    .hero__scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ============================================================
+       PRACTICE AREAS
+    ============================================================ */
+    .areas {
+      background: var(--surface);
+    }
+
+    .areas__header {
+      margin-bottom: 3rem;
+    }
+
+    .areas__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .areas__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .areas__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .area-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.75rem;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+
+    .area-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 24px var(--gold-dim), 0 8px 32px rgba(0,0,0,0.5);
+      transform: translateY(-4px);
+    }
+
+    .area-card__icon {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: var(--radius);
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+
+    .area-card__title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+
+    .area-card__desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* 5th card centered on 3-col layout */
+    @media (min-width: 1024px) {
+      .area-card:last-child:nth-child(5) {
+        grid-column: 3 / 4;
+      }
+    }
+
+    /* ============================================================
+       ABOUT
+    ============================================================ */
+    .about {
+      background: var(--bg);
+    }
+
+    .about__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .about__grid { grid-template-columns: 280px 1fr; gap: 4rem; }
+    }
+
+    /* Photo placeholder */
+    .about__photo-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .about__photo {
+      width: 220px;
+      height: 280px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about__photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201, 168, 76, 0.08), transparent 65%);
+    }
+
+    .about__photo-initials {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+
+    .about__photo-name {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      position: relative;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .about__bio p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.75;
+    }
+
+    .about__credentials {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .credential-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .credential-item i {
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-top: 0.15rem;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       WHY US
+    ============================================================ */
+    .why {
+      background: var(--surface);
+    }
+
+    .why__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .why__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .why-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 2rem;
+      text-align: center;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .why-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+
+    .why-card__icon {
+      width: 64px;
+      height: 64px;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.5rem;
+      color: var(--gold);
+    }
+
+    .why-card__title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .why-card__text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    .contact {
+      background: var(--bg);
+    }
+
+    .contact__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .contact__grid { grid-template-columns: 1fr 1fr; align-items: start; }
+    }
+
+    .contact__items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.1rem;
+    }
+
+    .contact-item__icon {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--gold);
+    }
+
+    .contact-item__label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-item__value {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .contact-item__value a {
+      color: var(--text);
+      transition: color var(--transition);
+    }
+
+    .contact-item__value a:hover {
+      color: var(--gold);
+    }
+
+    .contact__cta-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .contact__cta-box h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .contact__cta-box p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.65;
+    }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: var(--wa-green);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    .btn-wa:hover {
+      background: #1ebe5c;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+    }
+
+    .footer__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      text-align: center;
+    }
+
+    @media (min-width: 640px) {
+      .footer__inner {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+
+    .footer__logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+    }
+
+    .footer__copy {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .footer__socials {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer__socials a {
+      width: 36px;
+      height: 36px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      transition: color var(--transition), border-color var(--transition), background var(--transition);
+    }
+
+    .footer__socials a:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    /* ============================================================
+       FLOATING WHATSAPP BUTTON
+    ============================================================ */
+    .wa-float {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      z-index: 200;
+    }
+
+    .wa-float a {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      background: var(--wa-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .wa-float a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37, 211, 102, 0.55);
+    }
+
+    /* Pulsing ring animation */
+    .wa-float a::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid rgba(37, 211, 102, 0.45);
+      animation: pulse-ring 2.5s ease-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%   { transform: scale(0.88); opacity: 0.7; }
+      60%  { transform: scale(1.15); opacity: 0; }
+      100% { transform: scale(1.15); opacity: 0; }
+    }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .text-gold { color: var(--gold); }
+
+    /* Divider line */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="#" class="navbar__logo">Juris <span>Consultas</span></a>
+      <nav class="navbar__nav">
+        <a href="#areas">Áreas</a>
+        <a href="#sobre">El Estudio</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <a href="https://wa.me/54336154217256" target="_blank" rel="noopener noreferrer" class="navbar__cta">
+        <i class="fa-brands fa-whatsapp"></i> Consultar
+      </a>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" id="inicio">
+    <div class="hero__content">
+      <div class="hero__eyebrow">Estudio Jurídico</div>
+      <h1 class="hero__title">Juris<br /><span>Consultas</span></h1>
+      <p class="hero__subtitle">Dr. Sergio Iván Cej — Abogado Penalista &amp; Especialista en Cibercrimen</p>
+      <p class="hero__tagline">
+        Defensa penal<span> · </span>Ciberdelitos<span> · </span>Soluciones jurídicas
+      </p>
+      <div class="hero__actions">
+        <a href="https://wa.me/54336154217256" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          <i class="fa-brands fa-whatsapp"></i> Consultá ahora
+        </a>
+        <a href="#areas" class="btn-outline">
+          <i class="fa-solid fa-chevron-down"></i> Ver áreas
+        </a>
+      </div>
+    </div>
+    <a href="#areas" class="hero__scroll" aria-label="Desplazarse hacia abajo">
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+       ÁREAS DE PRÁCTICA
+  ============================================================ -->
+  <section class="section areas" id="areas">
+    <div class="container">
+      <div class="areas__header">
+        <span class="section-label">Lo que hacemos</span>
+        <h2 class="section-title">Áreas de Práctica</h2>
+        <div class="gold-rule"></div>
+        <p class="section-subtitle">Representación jurídica especializada en las áreas que más importan, con enfoque en resultados concretos y defensa rigurosa.</p>
+      </div>
+      <div class="areas__grid">
+
+        <!-- 1. Derecho Penal -->
+        <div class="area-card fade-in">
+          <div class="area-card__icon">
+            <i class="fa-solid fa-gavel"></i>
+          </div>
+          <h3 class="area-card__title">Derecho Penal</h3>
+          <p class="area-card__desc">Defensa técnica en causas penales complejas. Representación en todas las etapas del proceso, desde la investigación preparatoria hasta la instancia de impugnación.</p>
+        </div>
+
+        <!-- 2. Ciberdelitos -->
+        <div class="area-card fade-in">
+          <div class="area-card__icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="area-card__title">Ciberdelitos</h3>
+          <p class="area-card__desc">Especialización única en delitos informáticos: fraude digital, grooming, sextorsión, acceso no autorizado a sistemas, violación de datos y toda clase de cibercrimen.</p>
+        </div>
+
+        <!-- 3. Derecho Laboral -->
+        <div class="area-card fade-in">
+          <div class="area-card__icon">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+          <h3 class="area-card__title">Derecho Laboral</h3>
+          <p class="area-card__desc">Asesoramiento en relaciones de trabajo, despidos, accidentes laborales, liquidaciones y conflictos colectivos. Defensa del trabajador y del empleador.</p>
+        </div>
+
+        <!-- 4. Derecho Civil -->
+        <div class="area-card fade-in">
+          <div class="area-card__icon">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <h3 class="area-card__title">Derecho Civil</h3>
+          <p class="area-card__desc">Contratos, sucesiones, daños y perjuicios, familia y responsabilidad civil. Gestión integral de conflictos patrimoniales y personales con vocación de acuerdo.</p>
+        </div>
+
+        <!-- 5. Ciudadanía Italiana / Española -->
+        <div class="area-card fade-in">
+          <div class="area-card__icon">
+            <i class="fa-solid fa-passport"></i>
+          </div>
+          <h3 class="area-card__title">Ciudadanía Italiana &amp; Española</h3>
+          <p class="area-card__desc">Tramitación de ciudadanía italiana por descendencia y ciudadanía española por origen. Acompañamiento completo del proceso administrativo y judicial en ambos países.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+       SOBRE EL DR. CEJ
+  ============================================================ -->
+  <section class="section about" id="sobre">
+    <div class="container">
+      <div class="about__grid">
+
+        <!-- Photo placeholder -->
+        <div class="about__photo-wrap fade-in">
+          <div class="about__photo">
+            <span class="about__photo-initials">SIC</span>
+            <span class="about__photo-name">Dr. Sergio Iván Cej</span>
+          </div>
+        </div>
+
+        <!-- Bio -->
+        <div class="about__bio fade-in">
+          <span class="section-label">El Estudio</span>
+          <h2 class="section-title">Dr. Sergio Iván Cej</h2>
+          <div class="gold-rule"></div>
+          <p>El Dr. Sergio Iván Cej es abogado penalista con una trayectoria consolidada en la defensa de personas físicas y jurídicas ante la justicia argentina. Radicado en San Nicolás de los Arroyos, provincia de Buenos Aires, ejerce la abogacía con rigor técnico y compromiso ético.</p>
+          <p>Su formación de posgrado lo posiciona como uno de los pocos profesionales del país con especialización simultánea en Cibercrimen y Ciberseguridad, áreas en constante expansión ante el avance de la criminalidad digital. Esta combinación le permite brindar un asesoramiento de vanguardia tanto en la defensa penal tradicional como en los delitos informáticos de alta complejidad.</p>
+
+          <ul class="about__credentials">
+            <li class="credential-item">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <span>Abogado — Especialista en Derecho Penal</span>
+            </li>
+            <li class="credential-item">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>Especialista en Cibercrimen</span>
+            </li>
+            <li class="credential-item">
+              <i class="fa-solid fa-microchip"></i>
+              <span>Maestría en Ciberseguridad</span>
+            </li>
+            <li class="credential-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>San Nicolás de los Arroyos, Buenos Aires, Argentina</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+       POR QUÉ ELEGIRNOS
+  ============================================================ -->
+  <section class="section why" id="por-que">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:3rem;">
+        <span class="section-label">Nuestro diferencial</span>
+        <h2 class="section-title">Por qué elegirnos</h2>
+        <div class="gold-rule" style="margin-left:auto; margin-right:auto;"></div>
+      </div>
+      <div class="why__grid">
+
+        <div class="why-card fade-in">
+          <div class="why-card__icon">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <h3 class="why-card__title">Experiencia Comprobada</h3>
+          <p class="why-card__text">Años de ejercicio profesional en causas penales de diversa complejidad avalan la solidez técnica y estratégica del estudio ante distintos fueros y jurisdicciones.</p>
+        </div>
+
+        <div class="why-card fade-in">
+          <div class="why-card__icon">
+            <i class="fa-solid fa-microchip"></i>
+          </div>
+          <h3 class="why-card__title">Especialización Única</h3>
+          <p class="why-card__text">La combinación de Derecho Penal y Maestría en Ciberseguridad constituye un perfil profesional diferenciador, ideal para casos que cruzan el mundo digital con el sistema judicial.</p>
+        </div>
+
+        <div class="why-card fade-in">
+          <div class="why-card__icon">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <h3 class="why-card__title">Respuesta Rápida</h3>
+          <p class="why-card__text">Entendemos que en materia penal el tiempo es crítico. Respondemos consultas con celeridad y ofrecemos atención personalizada desde el primer contacto.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
+       CONTACTO
+  ============================================================ -->
+  <section class="section contact" id="contacto">
+    <div class="container">
+      <div class="contact__grid">
+
+        <!-- Left: info -->
+        <div class="fade-in">
+          <span class="section-label">Contacto</span>
+          <h2 class="section-title">Hablemos</h2>
+          <div class="gold-rule"></div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:2rem; line-height:1.75;">
+            Cada caso es único. Contactanos para una consulta confidencial y evaluamos juntos la mejor estrategia jurídica para tu situación.
+          </p>
+          <div class="contact__items">
+
+            <div class="contact-item">
+              <div class="contact-item__icon">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <div>
+                <p class="contact-item__label">WhatsApp</p>
+                <p class="contact-item__value">
+                  <a href="https://wa.me/54336154217256" target="_blank" rel="noopener noreferrer">+54 336 154217256</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item__icon">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <div>
+                <p class="contact-item__label">Correo electrónico</p>
+                <p class="contact-item__value">
+                  <a href="mailto:cejsergio@gmail.com">cejsergio@gmail.com</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-item__icon">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div>
+                <p class="contact-item__label">Ubicación</p>
+                <p class="contact-item__value">San Nicolás de los Arroyos<br />Buenos Aires, Argentina</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: CTA box -->
+        <div class="contact__cta-box fade-in">
+          <i class="fa-brands fa-whatsapp" style="font-size:2.5rem; color:var(--wa-green); margin-bottom:1rem; display:block;"></i>
+          <h3>Consultá por WhatsApp</h3>
+          <p>La forma más rápida de obtener una primera orientación jurídica. Respondemos a la brevedad en horario de atención.</p>
+          <a href="https://wa.me/54336154217256" target="_blank" rel="noopener noreferrer" class="btn-wa">
+            <i class="fa-brands fa-whatsapp"></i> Escribir por WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__logo">Juris Consultas</div>
+      <p class="footer__copy">© 2025 Juris Consultas. Todos los derechos reservados.</p>
+      <div class="footer__socials">
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       FLOATING WHATSAPP BUTTON
+  ============================================================ -->
+  <div class="wa-float">
+    <a href="https://wa.me/54336154217256" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    /* ----------------------------------------------------------
+       Navbar: add "scrolled" class when page is scrolled
+    ---------------------------------------------------------- */
+    (function () {
+      const navbar = document.getElementById('navbar');
+      const onScroll = () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll(); // run on load
+    }());
+
+    /* ----------------------------------------------------------
+       Scroll fade-in: IntersectionObserver
+    ---------------------------------------------------------- */
+    (function () {
+      const targets = document.querySelectorAll('.fade-in');
+
+      if (!('IntersectionObserver' in window)) {
+        // Fallback: just show everything
+        targets.forEach(el => el.classList.add('visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target); // animate only once
+            }
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: '0px 0px -40px 0px'
+        }
+      );
+
+      targets.forEach(el => observer.observe(el));
+    }());
+
+    /* ----------------------------------------------------------
+       Smooth scroll for navbar anchor links
+    ---------------------------------------------------------- */
+    (function () {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    }());
+  </script>
+
+</body>
+</html>
