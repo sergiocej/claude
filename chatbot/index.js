@@ -7,7 +7,7 @@ app.use(express.json());
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-const SYSTEM_PROMPT = `Eres el asistente virtual del Dr. Sergio Iván Cej, abogado penalista y especialista en cibercrimen con Maestría en Ciberseguridad, radicado en San Nicolás de los Arroyos, Buenos Aires, Argentina. Atiendes consultas iniciales por Instagram para el estudio jurídico Juris Consultas.
+const SYSTEM_PROMPT = `Eres el asistente virtual del Dr. Sergio Iván Cej, abogado penalista y especialista en cibercrimen con Maestría en Ciberseguridad, radicado en San Nicolás de los Arroyos, Buenos Aires, Argentina. Atiendes consultas iniciales por Instagram y WhatsApp para el estudio jurídico Juris Consultas.
 
 ÁREAS DE PRÁCTICA:
 - Derecho Penal (delitos, causas penales, defensa penal)
@@ -57,7 +57,7 @@ async function generateReply(userId, userMessage) {
   return reply;
 }
 
-async function sendMessage(recipientId, text) {
+async function sendInstagramMessage(recipientId, text) {
   const res = await fetch('https://graph.facebook.com/v19.0/me/messages', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -75,6 +75,46 @@ async function sendMessage(recipientId, text) {
   }
 
   return res.json();
+}
+
+async function sendWhatsAppMessage(to, text) {
+  const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+  const res = await fetch(`https://graph.facebook.com/v19.0/${phoneNumberId}/messages`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
+    },
+    body: JSON.stringify({
+      messaging_product: 'whatsapp',
+      to,
+      type: 'text',
+      text: { body: text },
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(`WhatsApp API error: ${JSON.stringify(err)}`);
+  }
+
+  return res.json();
+}
+
+async function markWhatsAppAsRead(messageId) {
+  const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+  await fetch(`https://graph.facebook.com/v19.0/${phoneNumberId}/messages`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
+    },
+    body: JSON.stringify({
+      messaging_product: 'whatsapp',
+      status: 'read',
+      message_id: messageId,
+    }),
+  }).catch(() => {}); // No crítico si falla
 }
 
 // Verificación del webhook de Meta
@@ -95,35 +135,73 @@ app.get('/webhook', (req, res) => {
 app.post('/webhook', async (req, res) => {
   const body = req.body;
 
-  if (body.object !== 'instagram') {
+  if (body.object !== 'instagram' && body.object !== 'whatsapp_business_account') {
     return res.status(404).send('Not found');
   }
 
   // Responder 200 inmediatamente para que Meta no reintente
   res.status(200).send('EVENT_RECEIVED');
 
+  if (body.object === 'instagram') {
+    await handleInstagram(body);
+  } else {
+    await handleWhatsApp(body);
+  }
+});
+
+async function handleInstagram(body) {
   for (const entry of body.entry ?? []) {
     for (const event of entry.messaging ?? []) {
-      // Ignorar mensajes propios (eco)
       if (!event.message || event.message.is_echo) continue;
 
       const senderId = event.sender.id;
       const text = event.message.text;
-
       if (!text) continue;
 
-      console.log(`[${new Date().toISOString()}] Mensaje de ${senderId}: ${text}`);
+      const userId = `ig_${senderId}`;
+      console.log(`[IG] ${senderId}: ${text}`);
 
       try {
-        const reply = await generateReply(senderId, text);
-        await sendMessage(senderId, reply);
-        console.log(`[${new Date().toISOString()}] Respuesta enviada a ${senderId}`);
+        const reply = await generateReply(userId, text);
+        await sendInstagramMessage(senderId, reply);
+        console.log(`[IG] Respuesta enviada a ${senderId}`);
       } catch (err) {
-        console.error(`Error al procesar mensaje de ${senderId}:`, err.message);
+        console.error(`[IG] Error con ${senderId}:`, err.message);
       }
     }
   }
-});
+}
+
+async function handleWhatsApp(body) {
+  for (const entry of body.entry ?? []) {
+    for (const change of entry.changes ?? []) {
+      const value = change.value;
+      if (!value?.messages) continue;
+
+      for (const msg of value.messages) {
+        if (msg.type !== 'text') continue;
+
+        const from = msg.from; // número de teléfono
+        const text = msg.text?.body;
+        if (!text) continue;
+
+        const userId = `wa_${from}`;
+        console.log(`[WA] ${from}: ${text}`);
+
+        // Marcar como leído (muestra el doble check azul)
+        markWhatsAppAsRead(msg.id);
+
+        try {
+          const reply = await generateReply(userId, text);
+          await sendWhatsAppMessage(from, reply);
+          console.log(`[WA] Respuesta enviada a ${from}`);
+        } catch (err) {
+          console.error(`[WA] Error con ${from}:`, err.message);
+        }
+      }
+    }
+  }
+}
 
 app.get('/', (_req, res) => {
   res.send('Juris Consultas Bot — funcionando ✓');
