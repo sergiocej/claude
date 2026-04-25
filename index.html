@@ -850,6 +850,273 @@
       background: linear-gradient(90deg, transparent, var(--border), transparent);
       margin: 0;
     }
+
+    /* ============================================================
+       BOOKING / TURNOS
+    ============================================================ */
+    .booking {
+      background: var(--bg);
+    }
+
+    .booking__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    @media (min-width: 900px) {
+      .booking__grid { grid-template-columns: 1fr 380px; }
+    }
+
+    /* Form card */
+    .booking-form-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+    }
+
+    .booking-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 540px) {
+      .form-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .form-control {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      padding: 0.7rem 1rem;
+      width: 100%;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+    }
+
+    .form-control::placeholder {
+      color: var(--text-muted);
+      opacity: 0.55;
+    }
+
+    .form-control:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-dim);
+    }
+
+    select.form-control {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    select.form-control option {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .form-error {
+      font-size: 0.75rem;
+      color: #e05c5c;
+      display: none;
+    }
+
+    .form-group.has-error .form-control {
+      border-color: #e05c5c;
+    }
+
+    .form-group.has-error .form-error {
+      display: block;
+    }
+
+    .btn-wa-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      background: var(--wa-green);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      margin-top: 0.25rem;
+    }
+
+    .btn-wa-submit:hover {
+      background: #1ebe5c;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+    }
+
+    /* Info sidebar */
+    .booking__info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .info-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+    }
+
+    .info-card__icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: var(--radius);
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .info-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .info-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .info-card p:last-child { margin-bottom: 0; }
+
+    .btn-calendar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: transparent;
+      color: var(--gold);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--gold);
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition), transform var(--transition);
+      text-decoration: none;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-calendar:hover {
+      background: var(--gold-dim);
+      transform: translateY(-2px);
+    }
+
+    .horario-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .horario-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .horario-list li i {
+      color: var(--gold);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    /* How-it-works steps */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .step__num {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .step__text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      padding-top: 0.2rem;
+    }
   </style>
 </head>
 
@@ -864,6 +1131,7 @@
       <nav class="navbar__nav">
         <a href="#areas">Áreas</a>
         <a href="#sobre">El Estudio</a>
+        <a href="#turnos">Turnos</a>
         <a href="#contacto">Contacto</a>
       </nav>
       <a href="https://wa.me/54336154217256" target="_blank" rel="noopener noreferrer" class="navbar__cta">
@@ -1055,6 +1323,156 @@
   <div class="divider"></div>
 
   <!-- ============================================================
+       TURNOS / BOOKING
+  ============================================================ -->
+  <section class="section booking" id="turnos">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:3rem;">
+        <span class="section-label">Agendá tu turno</span>
+        <h2 class="section-title">Reservá una Consulta</h2>
+        <div class="gold-rule" style="margin-left:auto; margin-right:auto;"></div>
+        <p class="section-subtitle" style="margin:0 auto; text-align:center;">
+          Completá el formulario y se abrirá WhatsApp con tu solicitud ya lista para enviar. Confirmamos el turno a la brevedad.
+        </p>
+      </div>
+
+      <div class="booking__grid">
+
+        <!-- ── Formulario ── -->
+        <div class="booking-form-card fade-in">
+          <form id="bookingForm" class="booking-form" novalidate autocomplete="off">
+
+            <div class="form-row">
+              <div class="form-group" id="fg-nombre">
+                <label class="form-label" for="nombre">Nombre completo</label>
+                <input class="form-control" type="text" id="nombre" placeholder="Ej.: Juan García" />
+                <span class="form-error">Por favor ingresá tu nombre.</span>
+              </div>
+              <div class="form-group" id="fg-telefono">
+                <label class="form-label" for="telefono">Teléfono / WhatsApp</label>
+                <input class="form-control" type="tel" id="telefono" placeholder="Ej.: 336 154 000000" />
+                <span class="form-error">Por favor ingresá tu teléfono.</span>
+              </div>
+            </div>
+
+            <div class="form-group" id="fg-area">
+              <label class="form-label" for="area">Área de consulta</label>
+              <select class="form-control" id="area">
+                <option value="">— Seleccioná un área —</option>
+                <option value="Derecho Penal">Derecho Penal</option>
+                <option value="Ciberdelitos">Ciberdelitos</option>
+                <option value="Derecho Laboral">Derecho Laboral</option>
+                <option value="Derecho Civil">Derecho Civil</option>
+                <option value="Ciudadanía Italiana o Española">Ciudadanía Italiana / Española</option>
+                <option value="Otra consulta">Otra</option>
+              </select>
+              <span class="form-error">Por favor seleccioná un área.</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group" id="fg-fecha">
+                <label class="form-label" for="fecha">Fecha preferida</label>
+                <input class="form-control" type="date" id="fecha" />
+                <span class="form-error">Por favor seleccioná una fecha.</span>
+              </div>
+              <div class="form-group" id="fg-hora">
+                <label class="form-label" for="hora">Hora preferida</label>
+                <select class="form-control" id="hora">
+                  <option value="">— Seleccioná un horario —</option>
+                  <option value="09:00">09:00</option>
+                  <option value="09:30">09:30</option>
+                  <option value="10:00">10:00</option>
+                  <option value="10:30">10:30</option>
+                  <option value="11:00">11:00</option>
+                  <option value="11:30">11:30</option>
+                  <option value="14:00">14:00</option>
+                  <option value="14:30">14:30</option>
+                  <option value="15:00">15:00</option>
+                  <option value="15:30">15:30</option>
+                  <option value="16:00">16:00</option>
+                  <option value="16:30">16:30</option>
+                  <option value="17:00">17:00</option>
+                  <option value="17:30">17:30</option>
+                </select>
+                <span class="form-error">Por favor seleccioná un horario.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="detalle">Descripción breve (opcional)</label>
+              <textarea class="form-control" id="detalle" placeholder="Contanos brevemente tu situación para orientar mejor la consulta…"></textarea>
+            </div>
+
+            <button type="submit" class="btn-wa-submit" id="btnSubmit">
+              <i class="fa-brands fa-whatsapp"></i>
+              Agendar por WhatsApp
+            </button>
+
+          </form>
+        </div>
+
+        <!-- ── Sidebar info ── -->
+        <div class="booking__info fade-in">
+
+          <!-- Cómo funciona -->
+          <div class="info-card">
+            <div class="info-card__icon">
+              <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h4>¿Cómo funciona?</h4>
+            <div class="steps">
+              <div class="step">
+                <div class="step__num">1</div>
+                <p class="step__text">Completá el formulario con tus datos y el horario deseado.</p>
+              </div>
+              <div class="step">
+                <div class="step__num">2</div>
+                <p class="step__text">Se abre WhatsApp con tu solicitud de turno ya redactada.</p>
+              </div>
+              <div class="step">
+                <div class="step__num">3</div>
+                <p class="step__text">Enviá el mensaje y recibís confirmación con el evento en tu calendario.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Horarios -->
+          <div class="info-card">
+            <div class="info-card__icon">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <h4>Horarios de atención</h4>
+            <ul class="horario-list">
+              <li><i class="fa-solid fa-circle-check"></i>Lunes a Viernes: 9:00 – 18:00</li>
+              <li><i class="fa-solid fa-circle-check"></i>Sábados: 9:00 – 13:00</li>
+              <li><i class="fa-solid fa-circle-xmark" style="color:var(--text-muted)"></i>Domingos: cerrado</li>
+            </ul>
+          </div>
+
+          <!-- Google Calendar -->
+          <div class="info-card">
+            <div class="info-card__icon">
+              <i class="fa-brands fa-google"></i>
+            </div>
+            <h4>Ver disponibilidad en Google Calendar</h4>
+            <p>Consultá la agenda actualizada y elegí el horario más conveniente.</p>
+            <!--
+              INSTRUCCIÓN: reemplazá el href con tu enlace de Google Calendar Appointment Scheduling.
+              Para crearlo: calendar.google.com → "Citas" → "Crear horario de citas" → copiar enlace de reserva.
+            -->
+            <a href="#turnos" class="btn-calendar" id="calendarLink" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-google"></i> Ver agenda disponible
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============================================================
        CONTACTO
   ============================================================ -->
   <section class="section contact" id="contacto">
@@ -1208,6 +1626,92 @@
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         });
+      });
+    }());
+
+    /* ----------------------------------------------------------
+       Booking form → WhatsApp
+    ---------------------------------------------------------- */
+    (function () {
+      const WA_NUMBER = '54336154217256';
+
+      const form    = document.getElementById('bookingForm');
+      const fields  = {
+        nombre:   document.getElementById('nombre'),
+        telefono: document.getElementById('telefono'),
+        area:     document.getElementById('area'),
+        fecha:    document.getElementById('fecha'),
+        hora:     document.getElementById('hora'),
+        detalle:  document.getElementById('detalle'),
+      };
+
+      /* Set min date to today */
+      const today = new Date();
+      const yyyy  = today.getFullYear();
+      const mm    = String(today.getMonth() + 1).padStart(2, '0');
+      const dd    = String(today.getDate()).padStart(2, '0');
+      fields.fecha.min = `${yyyy}-${mm}-${dd}`;
+
+      function formatDate(isoDate) {
+        if (!isoDate) return '';
+        const [y, m, d] = isoDate.split('-');
+        return `${d}/${m}/${y}`;
+      }
+
+      function validate() {
+        let valid = true;
+        const required = ['nombre', 'telefono', 'area', 'fecha', 'hora'];
+        required.forEach(key => {
+          const fg = document.getElementById('fg-' + key);
+          const el = fields[key];
+          if (!el.value.trim()) {
+            fg && fg.classList.add('has-error');
+            valid = false;
+          } else {
+            fg && fg.classList.remove('has-error');
+          }
+        });
+        return valid;
+      }
+
+      /* Clear error on input */
+      Object.keys(fields).forEach(key => {
+        fields[key].addEventListener('input', () => {
+          const fg = document.getElementById('fg-' + key);
+          if (fg) fg.classList.remove('has-error');
+        });
+        fields[key].addEventListener('change', () => {
+          const fg = document.getElementById('fg-' + key);
+          if (fg) fg.classList.remove('has-error');
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!validate()) return;
+
+        const nombre   = fields.nombre.value.trim();
+        const telefono = fields.telefono.value.trim();
+        const area     = fields.area.value;
+        const fecha    = formatDate(fields.fecha.value);
+        const hora     = fields.hora.value;
+        const detalle  = fields.detalle.value.trim();
+
+        let msg = `Hola Dr. Cej, quisiera reservar una consulta de *${area}*.
+
+*Nombre:* ${nombre}
+*Teléfono:* ${telefono}
+*Fecha preferida:* ${fecha}
+*Hora preferida:* ${hora}`;
+
+        if (detalle) {
+          msg += `\n*Detalle:* ${detalle}`;
+        }
+
+        msg += '\n\nQuedo a disposición para confirmar el turno. ¡Muchas gracias!';
+
+        const encoded = encodeURIComponent(msg);
+        window.open(`https://wa.me/${WA_NUMBER}?text=${encoded}`, '_blank', 'noopener,noreferrer');
       });
     }());
   </script>
