@@ -1,0 +1,13 @@
+# Raw footage and rendered outputs (large binaries, not versioned)
+video-studio/footage/*
+!video-studio/footage/.gitkeep
+video-studio/**/edit/
+video-studio/**/*.mp4
+video-studio/**/*.mov
+video-studio/**/*.mkv
+video-studio/**/*.wav
+video-studio/**/*.mp3
+
+# Editors / OS
+.DS_Store
+Thumbs.db
