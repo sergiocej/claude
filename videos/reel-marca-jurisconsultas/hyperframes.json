@@ -40,6 +40,11 @@
       "name": "comparison-split",
       "type": "hyperframes:component",
       "target": "compositions/components/comparison-split.html"
+    },
+    {
+      "name": "sdf-iris",
+      "type": "hyperframes:block",
+      "target": "compositions/sdf-iris.html"
     }
   ]
 }

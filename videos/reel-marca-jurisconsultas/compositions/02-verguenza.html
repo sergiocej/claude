@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        /* El fondo del root es el negro del "tubo apagado". Todo lo que se ve
+           vive dentro de #s02-tube, que al final colapsa a una línea y deja
+           ver este negro. */
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0a0a0a;
+          font-family: Montserrat, sans-serif;
+          --alert: #8e2a2a;
+          --fg: #f5f5f5;
+          --accent: #c9a84c;
+        }
+
+        #s02-tube {
+          position: absolute;
+          inset: 0;
+          transform-origin: center center;
+          will-change: transform;
+        }
+
+        /* Panel de alerta: entra a pantalla completa justo en "vergüenza" */
+        #s02-alert {
+          position: absolute;
+          inset: 0;
+          background: var(--alert);
+          opacity: 0;
+          will-change: opacity;
+        }
+
+        #s02-grid {
+          position: absolute;
+          inset: 0;
+          background-image: linear-gradient(rgba(245, 245, 245, 0.028) 2px, transparent 2px);
+          background-size: 100% 96px;
+          will-change: transform;
+        }
+
+        .s02-stack {
+          position: absolute;
+          /* ancestro posicionado para el intercambio en el mismo centro */
+          left: 72px;
+          right: 72px;
+          top: 50%;
+          margin-top: -170px;
+        }
+
+        .s02-line {
+          display: block;
+          font-weight: 900;
+          text-transform: lowercase;
+          letter-spacing: -0.03em;
+          line-height: 0.97;
+          will-change: transform, opacity, filter;
+        }
+
+        #s02-pre {
+          font-size: 68px;
+          font-weight: 400;
+          color: rgba(245, 245, 245, 0.58);
+          opacity: 0;
+          margin-bottom: 0.22em;
+        }
+        #s02-bronca {
+          font-size: 122px;
+          color: var(--fg);
+          opacity: 0;
+        }
+        /* Las dos ocupan el mismo centro: una se va encogiendo mientras la
+           otra entra con sobrepaso. Es el intercambio por escala. */
+        #s02-verguenza {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 78px;
+          font-size: 150px;
+          color: #f7ece9;
+          opacity: 0;
+        }
+
+        #s02-espera {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 50%;
+          margin-top: 240px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 400;
+          font-size: 42px;
+          line-height: 1.45;
+          letter-spacing: 0.01em;
+          color: rgba(255, 240, 238, 0.82);
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+
+        /* La línea del apagado: nace en el centro cuando el tubo colapsa */
+        #s02-scanline {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 1080px;
+          height: 3px;
+          margin-left: -540px;
+          margin-top: -1.5px;
+          background: #ffe9e4;
+          transform-origin: center center;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+      </style>
+
+      <div id="root" data-composition-id="s02-verguenza" data-width="1080" data-height="1920">
+        <div id="s02-tube">
+          <div id="s02-alert"></div>
+          <div id="s02-grid" data-layout-ignore></div>
+
+          <div class="s02-stack">
+            <span class="s02-line" id="s02-pre">lo primero que sentís</span>
+            <span class="s02-line" id="s02-bronca">no es bronca.</span>
+            <span class="s02-line" id="s02-verguenza">es vergüenza.</span>
+          </div>
+
+          <div id="s02-espera">
+            <div>entonces no lo contás,</div>
+            <div>y esperás.</div>
+          </div>
+        </div>
+
+        <div id="s02-scanline"></div>
+      </div>
+
+      <script>
+        (function () {
+          "use strict";
+
+          var tl = gsap.timeline({ paused: true });
+
+          /* ---- Bloque 3, primera mitad: la corrección ---- */
+          tl.fromTo(
+            "#s02-pre",
+            { opacity: 0, y: 18, filter: "blur(14px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" },
+            0.18,
+          );
+          tl.fromTo(
+            "#s02-bronca",
+            { opacity: 0, y: 24, filter: "blur(22px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out" },
+            0.62,
+          );
+
+          /* Deriva lentísima de la grilla: el único decorativo vivo acá */
+          tl.fromTo("#s02-grid", { y: 0 }, { y: -58, duration: 7.5, ease: "none" }, 0);
+
+          /* ---- El golpe: el fondo salta a alerta exactamente en la palabra ----
+                  Intercambio por escala: el saliente se encoge y se va, el
+                  entrante llega con sobrepaso, los dos en el mismo centro. */
+          tl.to("#s02-alert", { opacity: 1, duration: 0.14, ease: "power2.in" }, 3.0);
+          tl.to(
+            "#s02-pre",
+            { opacity: 0, scale: 0.88, duration: 0.3, ease: "power2.in" },
+            2.9,
+          );
+          tl.to(
+            "#s02-bronca",
+            { opacity: 0, scale: 0.82, duration: 0.34, ease: "power2.in" },
+            2.9,
+          );
+          tl.fromTo(
+            "#s02-verguenza",
+            { opacity: 0, scale: 0.72 },
+            { opacity: 1, scale: 1, duration: 0.62, ease: "back.out(1.7)" },
+            3.02,
+          );
+
+          /* ---- Bloque 4: "entonces no lo contás, y esperás" ---- */
+          tl.fromTo(
+            "#s02-espera",
+            { opacity: 0, y: 26 },
+            { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+            5.05,
+          );
+
+          /* ---- El apagado de tubo ----
+                  Hecho a mano: busqué "CRT power off", "screen shutoff" y
+                  "retro monitor" en el catálogo y no hay nada que sirva. Es un
+                  scaleY contra una línea brillante, trivialmente determinista.
+                  La línea sobrevive al colapso y es de donde nace la escena 3. */
+          tl.to("#s02-scanline", { opacity: 1, duration: 0.1, ease: "none" }, 6.82);
+          tl.to(
+            "#s02-tube",
+            { scaleY: 0.0025, duration: 0.34, ease: "power3.in" },
+            6.84,
+          );
+          tl.to("#s02-tube", { opacity: 0, duration: 0.12, ease: "none" }, 7.18);
+          tl.to(
+            "#s02-scanline",
+            { scaleX: 0.26, duration: 0.3, ease: "power2.inOut" },
+            7.2,
+          );
+
+          window.__timelines["s02-verguenza"] = tl;
+          tl.seek(0);
+        })();
+      </script>
+    </template>
+  </body>
+</html>

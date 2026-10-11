@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0a0a0a;
+          font-family: Montserrat, sans-serif;
+          --fg: #f5f5f5;
+          --accent: #c9a84c;
+        }
+
+        /* El dorado de la escena 5 se retira hacia arriba y deja el oscuro */
+        #s06-gold {
+          position: absolute;
+          inset: 0;
+          background: #c9a84c;
+          transform-origin: center top;
+          will-change: transform;
+        }
+
+        #s06-halo {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 1100px;
+          height: 1100px;
+          margin-left: -550px;
+          margin-top: -550px;
+          border-radius: 50%;
+          background: radial-gradient(
+            circle at center,
+            rgba(201, 168, 76, 0.16) 0%,
+            rgba(201, 168, 76, 0) 66%
+          );
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+
+        /* El reloj. Arranca clavado donde está el de la esquina del HUD y con
+           el mismo aspecto, así la continuidad se lee; de ahí crece al centro.
+           Tiene que vivir acá y no en el HUD: una línea de tiempo de
+           sub-composición no puede animar elementos de la raíz. */
+        #s06-clock {
+          position: absolute;
+          right: 72px;
+          top: 64px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 400;
+          font-size: 26px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          font-variant-numeric: tabular-nums;
+          white-space: nowrap;
+          color: rgba(17, 17, 17, 0.78);
+          transform-origin: 100% 0%;
+          will-change: transform, color;
+        }
+
+        #s06-close {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 50%;
+          margin-top: -210px;
+          will-change: opacity;
+        }
+        /* Linea de entrada: mas chica y sin extrusion, para que el peso caiga
+           en las dos de abajo. */
+        #s06-l0 {
+          font-size: 76px;
+          font-weight: 400;
+          color: rgba(245, 245, 245, 0.6);
+          text-shadow: none;
+          margin-bottom: 0.2em;
+        }
+        #s06-l2 {
+          font-size: 118px;
+        }
+        .s06-line {
+          position: relative;
+          display: block;
+          font-size: 150px;
+          white-space: nowrap;
+          font-weight: 900;
+          text-transform: lowercase;
+          letter-spacing: -0.03em;
+          line-height: 0.97;
+          color: var(--fg);
+          opacity: 0;
+          will-change: transform, opacity, filter;
+          /* Extrusión por capas: cinco desplazamientos con alfa decreciente.
+             La regla 3d-text-depth-layers las propone como divs duplicados;
+             acá van como text-shadow apilada. Mismo efecto, y sin crear cinco
+             nodos de texto fantasma por línea, que el auditor lee —con razón—
+             como texto invisible y como falla de contraste. */
+          text-shadow:
+            4px 4px 0 rgba(201, 168, 76, 0.13),
+            8px 8px 0 rgba(201, 168, 76, 0.085),
+            12px 12px 0 rgba(201, 168, 76, 0.045);
+        }
+      </style>
+
+      <div id="root" data-composition-id="s06-tiempo" data-width="1080" data-height="1920">
+        <div id="s06-gold"></div>
+        <div id="s06-halo" data-layout-ignore></div>
+
+        <div id="s06-clock" data-layout-allow-overlap>juris consultas · 00:16:18</div>
+
+        <div id="s06-close">
+          <span class="s06-line" id="s06-l0">en materia penal,</span>
+          <span class="s06-line" id="s06-l1">el tiempo</span>
+          <span class="s06-line" id="s06-l2">es casi todo.</span>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          "use strict";
+
+          var tl = gsap.timeline({ paused: true });
+          var FPS = 30;
+
+          function pad(n) {
+            var s = String(Math.floor(n));
+            return s.length < 2 ? "0" + s : s;
+          }
+
+          /* ---- Bloque 12: el reloj crece y acelera ---- */
+          var clock = document.getElementById("s06-clock");
+          var drive = { T: 0 };
+
+          tl.fromTo(
+            drive,
+            { T: 0 },
+            {
+              T: 1,
+              duration: 2.55,
+              ease: "none",
+              onUpdate: function () {
+                /* El tiempo mostrado se dispara con el cuadrado de T: función
+                   pura del tiempo de la línea, nada de Date.now(). */
+                var shown = 16.6 + drive.T * drive.T * 118;
+                var mm = Math.floor(shown / 60);
+                var ss = Math.floor(shown % 60);
+                var ff = Math.floor((shown % 1) * FPS);
+                clock.textContent =
+                  "juris consultas · " + pad(mm) + ":" + pad(ss) + ":" + pad(ff);
+              },
+            },
+            0.1,
+          );
+
+          /* El dorado se va hacia arriba; el reloj viaja al centro y se agranda */
+          tl.to("#s06-gold", { scaleY: 0, duration: 0.85, ease: "power3.inOut" }, 0.18);
+          tl.to("#s06-clock", { color: "rgba(224, 188, 106, 0.95)", duration: 0.6, ease: "none" }, 0.4);
+          tl.to(
+            "#s06-clock",
+            { scale: 2.45, x: -56, y: 830, duration: 1.5, ease: "power3.inOut" },
+            0.3,
+          );
+          tl.fromTo(
+            "#s06-halo",
+            { opacity: 0, scale: 0.9 },
+            { opacity: 1, scale: 1.04, duration: 1.4, ease: "power2.out" },
+            0.6,
+          );
+
+          /* ---- Bloque 13: el reloj se retira y queda la frase ---- */
+          tl.to(
+            "#s06-clock",
+            { opacity: 0.1, scale: 1.4, y: 430, duration: 0.8, ease: "power2.inOut" },
+            2.72,
+          );
+          tl.fromTo(
+            "#s06-l0",
+            { opacity: 0, y: 22, filter: "blur(14px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" },
+            2.9,
+          );
+          tl.fromTo(
+            "#s06-l1",
+            { opacity: 0, y: 26, filter: "blur(18px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.56, ease: "power3.out" },
+            3.22,
+          );
+          tl.fromTo(
+            "#s06-l2",
+            { opacity: 0, y: 30, filter: "blur(24px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.68, ease: "power3.out" },
+            3.6,
+          );
+
+          window.__timelines["s06-tiempo"] = tl;
+          tl.seek(0);
+        })();
+      </script>
+    </template>
+  </body>
+</html>

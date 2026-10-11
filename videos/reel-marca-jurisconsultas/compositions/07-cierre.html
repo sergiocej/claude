@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0a0a0a;
+          font-family: Montserrat, sans-serif;
+          --light: #f5f5f5;
+          --ink: #111111;
+          --fg: #f5f5f5;
+          --accent: #c9a84c;
+          --accent-soft: #e0bc6a;
+        }
+
+        /* ---------- Bloque 14: fondo claro, entrada lenta ---------- */
+
+        #s07-light {
+          position: absolute;
+          inset: 0;
+          background: var(--light);
+          will-change: opacity;
+        }
+
+        #s07-ask {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 50%;
+          margin-top: -300px;
+        }
+        .s07-l {
+          display: block;
+          color: var(--ink);
+          letter-spacing: -0.03em;
+          line-height: 1.02;
+          opacity: 0;
+          will-change: transform, opacity, filter;
+        }
+        #s07-a1 {
+          font-size: 76px;
+          font-weight: 400;
+          color: rgba(17, 17, 17, 0.64);
+        }
+        #s07-a2 {
+          margin-top: 0.3em;
+          font-size: 68px;
+          font-weight: 400;
+        }
+        #s07-a3 {
+          margin-top: 0.14em;
+          font-size: 170px;
+          font-weight: 900;
+          letter-spacing: -0.045em;
+        }
+
+        /* ---------- Bloque 15: el mosaico ---------- */
+
+        #s07-mosaic {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 928px;
+          height: 1072px;
+          margin-left: -464px;
+          margin-top: -536px;
+          display: grid;
+          grid-template-columns: repeat(3, 296px);
+          grid-template-rows: repeat(2, 526px);
+          gap: 20px;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+        #s07-mosaic img {
+          display: block;
+          width: 296px;
+          height: 526px;
+          object-fit: cover;
+          border-radius: 6px;
+          /* Filete: sin esto la miniatura de la escena 6 (oscura sobre fondo
+             oscuro) no se lee como baldosa. */
+          outline: 2px solid rgba(245, 245, 245, 0.14);
+          outline-offset: -2px;
+        }
+
+        /* ---------- La placa final ---------- */
+
+        #s07-plate {
+          position: absolute;
+          inset: 0;
+          background: #0a0a0a;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0;
+          opacity: 0;
+          will-change: opacity;
+        }
+        #s07-mark {
+          font-size: 82px;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.02em;
+          color: var(--fg);
+          text-align: center;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+        #s07-reg {
+          margin-top: 10px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 26px;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: var(--accent);
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+        #s07-hair {
+          width: 320px;
+          height: 2px;
+          margin: 54px 0;
+          background: rgba(201, 168, 76, 0.5);
+          transform-origin: center center;
+          will-change: transform;
+        }
+        #s07-cta {
+          font-size: 58px;
+          font-weight: 700;
+          color: var(--fg);
+          text-align: center;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+        #s07-phone {
+          margin-top: 22px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 700;
+          font-size: 46px;
+          letter-spacing: 0.04em;
+          color: var(--accent-soft);
+          font-variant-numeric: tabular-nums;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+        #s07-place {
+          margin-top: 40px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 28px;
+          letter-spacing: 0.08em;
+          color: rgba(245, 245, 245, 0.56);
+          text-align: center;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+      </style>
+
+      <div id="root" data-composition-id="s07-cierre" data-width="1080" data-height="1920">
+        <div id="s07-light">
+          <div id="s07-ask">
+            <span class="s07-l" id="s07-a1">si te está pasando,</span>
+            <span class="s07-l" id="s07-a2">no esperes a estar seguro de que</span>
+            <span class="s07-l" id="s07-a3">es grave.</span>
+          </div>
+        </div>
+
+        <div id="s07-mosaic" data-layout-ignore>
+          <img src="assets/mosaico/s1.jpg" alt="Escena 1 del video" />
+          <img src="assets/mosaico/s2.jpg" alt="Escena 2 del video" />
+          <img src="assets/mosaico/s3.jpg" alt="Escena 3 del video" />
+          <img src="assets/mosaico/s4.jpg" alt="Escena 4 del video" />
+          <img src="assets/mosaico/s5.jpg" alt="Escena 5 del video" />
+          <img src="assets/mosaico/s6.jpg" alt="Escena 6 del video" />
+        </div>
+
+        <!-- El logo está pendiente: hasta que llegue el archivo, la marca va
+             como wordmark en Montserrat 900. -->
+        <div id="s07-plate">
+          <div id="s07-mark">Juris Consultas</div>
+          <div id="s07-reg">Dr. Sergio Iván Cej</div>
+          <div id="s07-hair"></div>
+          <div id="s07-cta">Escribinos por WhatsApp</div>
+          <div id="s07-phone">+54 336 154217256</div>
+          <div id="s07-place">San Nicolás de los Arroyos · Buenos Aires</div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          "use strict";
+
+          var tl = gsap.timeline({ paused: true });
+
+          /* ---- Bloque 14 ----
+             Es la única vez que el video baja la velocidad a propósito: las
+             entradas duran casi el doble que en el resto de la pieza. */
+          tl.fromTo(
+            "#s07-a1",
+            { opacity: 0, y: 24, filter: "blur(16px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.82, ease: "power2.out" },
+            0.25,
+          );
+          tl.fromTo(
+            "#s07-a2",
+            { opacity: 0, y: 24, filter: "blur(16px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.82, ease: "power2.out" },
+            1.35,
+          );
+          tl.fromTo(
+            "#s07-a3",
+            { opacity: 0, y: 32, filter: "blur(26px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.95, ease: "power3.out" },
+            2.55,
+          );
+
+          /* ---- Bloque 15: el mosaico se aleja ----
+             Arranca ampliado, como si el espectador estuviera todavía dentro
+             de la última escena, y retrocede hasta que se ven las seis. Las
+             miniaturas son capturas reales de las escenas 1 a 6; si una escena
+             cambia hay que regenerarlas (assets/mosaico). */
+          tl.to("#s07-light", { opacity: 0, duration: 0.26, ease: "power2.in" }, 4.55);
+          tl.fromTo(
+            "#s07-mosaic",
+            { opacity: 0, scale: 2.5 },
+            { opacity: 1, scale: 1, duration: 1.35, ease: "power3.out" },
+            4.5,
+          );
+          tl.to(
+            "#s07-mosaic",
+            { scale: 0.72, opacity: 0, duration: 0.85, ease: "power2.inOut" },
+            5.95,
+          );
+
+          /* ---- La placa ---- */
+          tl.to("#s07-plate", { opacity: 1, duration: 0.4, ease: "power2.out" }, 6.25);
+          tl.fromTo(
+            "#s07-mark",
+            { opacity: 0, scale: 0.84 },
+            { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" },
+            6.3,
+          );
+          tl.fromTo(
+            "#s07-reg",
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+            6.62,
+          );
+          tl.fromTo(
+            "#s07-hair",
+            { scaleX: 0 },
+            { scaleX: 1, duration: 0.6, ease: "power3.out" },
+            6.72,
+          );
+          tl.fromTo(
+            "#s07-cta",
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+            6.88,
+          );
+          tl.fromTo(
+            "#s07-phone",
+            { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+            7.08,
+          );
+          tl.fromTo(
+            "#s07-place",
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+            7.28,
+          );
+
+          window.__timelines["s07-cierre"] = tl;
+          tl.seek(0);
+        })();
+      </script>
+    </template>
+  </body>
+</html>

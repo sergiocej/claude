@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        /* Primera escena en fondo claro. Nace de la línea en la que colapsó
+           la escena 2: #s03-reveal se abre desde 2 px de alto. */
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden; /* OBLIGATORIO: con scale > 1 el contenido se escapa */
+          background: #0a0a0a;
+          font-family: Montserrat, sans-serif;
+          --light: #f5f5f5;
+          --ink: #111111;
+          --accent: #c9a84c;
+          --alert: #8e2a2a;
+        }
+
+        #s03-reveal {
+          position: absolute;
+          inset: 0;
+          background: var(--light);
+          transform-origin: center center;
+          will-change: transform;
+        }
+
+        #s03-paper {
+          position: absolute;
+          inset: 0;
+          background-image: linear-gradient(rgba(17, 17, 17, 0.045) 2px, transparent 2px);
+          background-size: 100% 110px;
+        }
+
+        /* ---------- Cámara: fuera escala, dentro contratraslada ---------- */
+
+        #s03-zoom-outer {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+        #s03-zoom-inner {
+          display: grid;
+          place-items: center;
+          will-change: transform;
+        }
+
+        /* ---------- Bloque 5: la burbuja ---------- */
+
+        #s03-bubble {
+          position: relative;
+          width: 760px;
+          padding: 44px 48px 52px;
+          background: #ffffff;
+          border: 2px solid rgba(17, 17, 17, 0.1);
+          border-radius: 28px 28px 28px 6px;
+          box-shadow: 0 26px 60px rgba(17, 17, 17, 0.12);
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+        #s03-bubble .who {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 700;
+          font-size: 28px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--alert);
+        }
+        #s03-bubble .msg {
+          margin-top: 18px;
+          font-size: 46px;
+          font-weight: 400;
+          line-height: 1.26;
+          color: var(--ink);
+        }
+        #s03-bubble .when {
+          margin-top: 22px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 26px;
+          letter-spacing: 0.06em;
+          color: rgba(17, 17, 17, 0.62);
+        }
+
+        #s03-title {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 230px;
+          font-size: 104px;
+          font-weight: 900;
+          text-transform: lowercase;
+          letter-spacing: -0.04em;
+          line-height: 0.94;
+          color: var(--ink);
+          will-change: transform, opacity;
+        }
+        #s03-title span {
+          display: block;
+          opacity: 0;
+        }
+
+        /* ---------- Bloque 6: la planilla ---------- */
+
+        #s03-sheet {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 560px;
+          background: #ffffff;
+          border: 2px solid rgba(17, 17, 17, 0.12);
+          border-radius: 10px;
+          overflow: hidden;
+          opacity: 0;
+          will-change: opacity;
+        }
+        .s03-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 24px;
+          padding: 28px 34px;
+          border-bottom: 2px solid rgba(17, 17, 17, 0.08);
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 400;
+          font-size: 32px;
+          color: var(--ink);
+          will-change: transform, opacity;
+        }
+        .s03-row:last-child {
+          border-bottom: 0;
+        }
+        .s03-row .st {
+          font-weight: 700;
+          color: var(--alert);
+          white-space: nowrap;
+        }
+        .s03-head {
+          background: #111111;
+          color: #f5f5f5;
+          font-weight: 700;
+          font-size: 26px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+        .s03-head .st {
+          color: var(--accent);
+        }
+
+        /* ---------- Las partículas ---------- */
+
+        #s03-field {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 0;
+          height: 0;
+          z-index: 5;
+        }
+        .s03-p {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: #111111;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+      </style>
+
+      <div id="root" data-composition-id="s03-prueba" data-width="1080" data-height="1920">
+        <div id="s03-reveal">
+          <div id="s03-paper" data-layout-ignore></div>
+
+          <div id="s03-title">
+            <span>la prueba</span>
+            <span>se borra sola.</span>
+          </div>
+
+          <div id="s03-zoom-outer">
+            <div id="s03-zoom-inner">
+              <div id="s03-bubble" data-layout-allow-overlap>
+                <div class="who" data-layout-allow-overlap>mensaje recibido</div>
+                <div class="msg">Soy del área de fraude. Necesito que confirmes el código que te llegó.</div>
+                <div class="when">14/03 · 19:42</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="s03-sheet">
+            <div class="s03-row s03-head"><span>registro</span><span class="st">estado</span></div>
+            <div class="s03-row"><span>log de acceso · 12/03</span><span class="st">vencido</span></div>
+            <div class="s03-row"><span>conversación · 14/03</span><span class="st">eliminada</span></div>
+            <div class="s03-row"><span>transferencia · 14/03</span><span class="st">ejecutada</span></div>
+            <div class="s03-row"><span>IP de origen · 15/03</span><span class="st">sin dato</span></div>
+            <div class="s03-row"><span>respaldo · 20/03</span><span class="st">purgado</span></div>
+          </div>
+
+          <div id="s03-field"></div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          "use strict";
+
+          var tl = gsap.timeline({ paused: true });
+
+          /* Punto de convergencia. La escena 4 abre su círculo exactamente
+             acá: si se mueve uno, se mueve el otro. */
+          var SINK_X = 540;
+          var SINK_Y = 1180;
+
+          /* ---- Nace de la línea en la que colapsó la escena 2 ---- */
+          tl.fromTo(
+            "#s03-reveal",
+            { scaleY: 0.0025 },
+            { scaleY: 1, duration: 0.42, ease: "power3.out" },
+            0,
+          );
+
+          /* ---- Bloque 5 ---- */
+          tl.fromTo(
+            "#s03-title span",
+            { opacity: 0, y: 22, filter: "blur(18px)" },
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 0.52,
+              stagger: 0.14,
+              ease: "power3.out",
+              immediateRender: false,
+            },
+            0.34,
+          );
+          tl.fromTo(
+            "#s03-bubble",
+            { opacity: 0, y: 34, scale: 0.94 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "power3.out" },
+            0.62,
+          );
+
+          /* ---- Zoom que atraviesa la burbuja ----
+             La burbuja está centrada, así que su desplazamiento respecto del
+             centro es cero y la contratraslación también. Por eso #s03-zoom-inner
+             no se mueve: el par sigue existiendo porque la regla lo exige y
+             porque si la burbuja se descentra, el arreglo es una sola línea.
+             Escala y contratraslación comparten posición, duración y ease. */
+          var ZOOM_AT = 2.62;
+          var ZOOM_DUR = 1.5;
+          tl.to(
+            "#s03-zoom-outer",
+            { scale: 7.2, duration: ZOOM_DUR, ease: "power3.inOut" },
+            ZOOM_AT,
+          );
+          tl.to(
+            "#s03-zoom-inner",
+            { x: 0, y: 0, duration: ZOOM_DUR, ease: "power3.inOut" },
+            ZOOM_AT,
+          );
+          tl.to(
+            "#s03-bubble",
+            { opacity: 0, duration: 0.5, ease: "power2.in" },
+            ZOOM_AT + 0.78,
+          );
+          tl.to("#s03-title", { opacity: 0, duration: 0.45, ease: "power2.in" }, ZOOM_AT + 0.3);
+
+          /* Del otro lado de la burbuja está la planilla */
+          tl.fromTo(
+            "#s03-sheet",
+            { opacity: 0 },
+            { opacity: 1, duration: 0.5, ease: "power2.out" },
+            ZOOM_AT + 1.08,
+          );
+          tl.fromTo(
+            ".s03-row",
+            { opacity: 0, y: 26 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.42,
+              stagger: 0.07,
+              ease: "power3.out",
+              immediateRender: false,
+            },
+            ZOOM_AT + 1.16,
+          );
+
+          /* ---- Las filas se desarman en partículas que viajan a un punto ----
+             Variante de disolución de la regla particle-burst, con una
+             diferencia deliberada: acá las partículas SÍ tienen destino. La
+             posición sigue siendo función pura de T (lerp origen→destino con
+             dispersión derivada del índice), así que un seek a cualquier
+             momento da el cuadro correcto. */
+          var COUNT = 36;
+          function prand(n) {
+            var x = Math.sin(n * 127.1 + 311.7) * 43758.5453;
+            return x - Math.floor(x);
+          }
+
+          var field = document.getElementById("s03-field");
+          var parts = [];
+          /* Caja de la planilla en coordenadas del lienzo, tomada del CSS.
+             Constantes escritas a mano, no medidas: en un montaje de varias
+             escenas las posteriores pueden no estar maquetadas todavía. */
+          var BOX_X = 72,
+            BOX_Y = 560,
+            BOX_W = 936,
+            BOX_H = 420;
+
+          for (var i = 0; i < COUNT; i += 1) {
+            var el = document.createElement("div");
+            el.className = "s03-p";
+            field.appendChild(el);
+            parts.push({
+              el: el,
+              ox: BOX_X + prand(i * 13 + 1) * BOX_W,
+              oy: BOX_Y + prand(i * 17 + 5) * BOX_H,
+              /* arco lateral para que no viajen en línea recta */
+              bow: (prand(i * 7 + 3) * 2 - 1) * 190,
+              lag: prand(i * 23 + 9) * 0.3,
+            });
+          }
+
+          var drive = { T: 0 };
+          var FLIGHT = 1.45;
+          tl.fromTo(
+            drive,
+            { T: 0 },
+            {
+              T: 1,
+              duration: FLIGHT,
+              ease: "none",
+              onUpdate: function () {
+                var T = drive.T;
+                for (var k = 0; k < parts.length; k += 1) {
+                  var p = parts[k];
+                  /* cada partícula arranca con su propio retraso, todo horneado */
+                  var u = (T - p.lag) / (1 - p.lag);
+                  if (u < 0) u = 0;
+                  if (u > 1) u = 1;
+                  var e = u * u * (3 - 2 * u); /* suavizado, sin acumular */
+                  var x = p.ox + (SINK_X - p.ox) * e + p.bow * Math.sin(e * Math.PI);
+                  var y = p.oy + (SINK_Y - p.oy) * e;
+                  var a = T === 0 ? 0 : Math.min(1, u * 5) * (1 - e * e);
+                  p.el.style.transform = "translate(" + x + "px, " + y + "px)";
+                  p.el.style.opacity = String(a);
+                }
+              },
+            },
+            5.72,
+          );
+
+          /* La planilla se va mientras las partículas se la llevan */
+          tl.to("#s03-sheet", { opacity: 0, duration: 0.85, ease: "power2.in" }, 5.95);
+
+          window.__timelines["s03-prueba"] = tl;
+          tl.seek(0);
+        })();
+      </script>
+    </template>
+  </body>
+</html>

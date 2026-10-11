@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0a0a0a;
+          font-family: Montserrat, sans-serif;
+          --fg: #f5f5f5;
+          --ink: #111111;
+          --accent: #c9a84c;
+        }
+
+        /* Fondo desenfocado: el enfoque selectivo es todo el recurso de la
+           primera mitad. La escena está muerta de quieta a propósito. */
+        #s04-backdrop {
+          position: absolute;
+          inset: 0;
+          will-change: filter;
+        }
+        #s04-halo {
+          position: absolute;
+          left: 50%;
+          top: 61%;
+          width: 980px;
+          height: 980px;
+          margin-left: -490px;
+          margin-top: -490px;
+          border-radius: 50%;
+          background: radial-gradient(
+            circle at center,
+            rgba(201, 168, 76, 0.14) 0%,
+            rgba(201, 168, 76, 0) 68%
+          );
+        }
+        #s04-rule {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 61%;
+          height: 2px;
+          background: rgba(245, 245, 245, 0.12);
+        }
+
+        #s04-dead {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 50%;
+          margin-top: -250px;
+          will-change: filter, opacity;
+        }
+        #s04-dead span {
+          display: block;
+          font-size: 140px;
+          font-weight: 900;
+          text-transform: lowercase;
+          letter-spacing: -0.03em;
+          line-height: 0.97;
+          color: var(--fg);
+          opacity: 0;
+          will-change: transform, opacity, filter;
+        }
+        #s04-dead .soft {
+          font-size: 64px;
+          font-weight: 400;
+          color: rgba(245, 245, 245, 0.56);
+          margin-bottom: 0.3em;
+        }
+
+        /* ---------- El iris ----------
+           Se abre desde el punto donde cayeron las partículas de la escena 3
+           y trae el dorado con el que arranca la escena 5. Hecho con
+           clip-path, no con shader: determinista, barato y exacto. El bloque
+           sdf-iris del catálogo es una pieza de muestra completa con su propio
+           fondo, fuentes por red y WebGL; además el camino de composición por
+           capas vuelve transparente la raíz y rompe los fondos a sangre. */
+        #s04-iris {
+          position: absolute;
+          inset: 0;
+          background: #c9a84c;
+          clip-path: circle(0px at 540px 1180px);
+          will-change: clip-path;
+        }
+
+        #s04-turn {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 50%;
+          margin-top: -220px;
+        }
+        #s04-turn .hit {
+          display: block;
+          font-size: 118px;
+          font-weight: 900;
+          text-transform: lowercase;
+          letter-spacing: -0.04em;
+          line-height: 0.94;
+          color: var(--ink);
+          opacity: 0;
+          will-change: transform, opacity, filter;
+        }
+        #s04-turn .sub {
+          display: block;
+          margin-top: 0.42em;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 400;
+          font-size: 40px;
+          line-height: 1.45;
+          letter-spacing: 0.01em;
+          color: #3a2e08;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+      </style>
+
+      <div id="root" data-composition-id="s04-quiebre" data-width="1080" data-height="1920">
+        <div id="s04-backdrop" data-layout-ignore>
+          <div id="s04-halo"></div>
+          <div id="s04-rule"></div>
+        </div>
+
+        <div id="s04-dead">
+          <span class="soft">hasta que un día te dicen que</span>
+          <span>ya no se puede</span>
+          <span>hacer nada.</span>
+        </div>
+
+        <div id="s04-iris">
+          <div id="s04-turn">
+            <span class="hit">y no es cierto.</span>
+            <span class="sub">llegaste tarde a un sistema que nadie te explicó.</span>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          "use strict";
+
+          var tl = gsap.timeline({ paused: true });
+
+          /* Mismo punto que el sumidero de partículas de la escena 3. */
+          var IRIS_X = 540;
+          var IRIS_Y = 1180;
+          var IRIS_R = 1350; /* alcanza las esquinas más lejanas desde ese punto */
+
+          /* ---- Bloque 7: quietud. Entra y se queda. ---- */
+          tl.fromTo(
+            "#s04-dead span",
+            { opacity: 0, y: 22, filter: "blur(20px)" },
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 0.6,
+              stagger: 0.16,
+              ease: "power3.out",
+            },
+            0.2,
+          );
+
+          /* ---- El silencio de 0,6 s ----
+             No pasa nada salvo que el foco se va. Es el único momento del
+             video en que la imagen pierde nitidez a propósito: la frase se
+             desenfoca justo antes de que la desmientan. */
+          tl.to("#s04-dead", { filter: "blur(9px)", opacity: 0.55, duration: 0.55, ease: "power2.in" }, 4.95);
+          tl.to("#s04-backdrop", { filter: "blur(16px)", duration: 0.55, ease: "power2.in" }, 4.95);
+
+          /* ---- Bloque 8: el giro. El iris se abre desde el sumidero. ---- */
+          tl.fromTo(
+            "#s04-iris",
+            { clipPath: "circle(0px at " + IRIS_X + "px " + IRIS_Y + "px)" },
+            {
+              clipPath: "circle(" + IRIS_R + "px at " + IRIS_X + "px " + IRIS_Y + "px)",
+              duration: 1.15,
+              ease: "power3.inOut",
+            },
+            5.62,
+          );
+          /* Una vez que el iris cubrió todo, la frase desmentida no tiene por
+             qué seguir existiendo detrás del dorado. */
+          tl.to("#s04-dead", { opacity: 0, duration: 0.28, ease: "power2.in" }, 5.85);
+
+          tl.fromTo(
+            "#s04-turn .hit",
+            { opacity: 0, y: 26, filter: "blur(16px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out" },
+            6.1,
+          );
+          tl.fromTo(
+            "#s04-turn .sub",
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
+            6.72,
+          );
+
+          window.__timelines["s04-quiebre"] = tl;
+          tl.seek(0);
+        })();
+      </script>
+    </template>
+  </body>
+</html>

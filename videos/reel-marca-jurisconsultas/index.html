@@ -148,31 +148,84 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="17.5"
+      data-duration="56.5"
       data-width="1080"
       data-height="1920"
     >
-      <!-- Escena 1 — bloques 1 y 2 -->
       <div
         id="escena-1-gancho"
         class="clip"
         data-composition-id="s01-hook"
         data-composition-src="compositions/01-hook.html"
-        data-start="0"
+        data-start="0.0"
         data-duration="6.5"
         data-track-index="0"
         data-width="1080"
         data-height="1920"
       ></div>
-
-      <!-- Escena 5 — bloques 9, 10 y 11 -->
+      <div
+        id="escena-2-verguenza"
+        class="clip"
+        data-composition-id="s02-verguenza"
+        data-composition-src="compositions/02-verguenza.html"
+        data-start="6.5"
+        data-duration="7.5"
+        data-track-index="0"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+      <div
+        id="escena-3-prueba"
+        class="clip"
+        data-composition-id="s03-prueba"
+        data-composition-src="compositions/03-prueba.html"
+        data-start="14.0"
+        data-duration="7.5"
+        data-track-index="0"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+      <div
+        id="escena-4-quiebre"
+        class="clip"
+        data-composition-id="s04-quiebre"
+        data-composition-src="compositions/04-quiebre.html"
+        data-start="21.5"
+        data-duration="10.0"
+        data-track-index="0"
+        data-width="1080"
+        data-height="1920"
+      ></div>
       <div
         id="escena-5-mitades"
         class="clip"
         data-composition-id="s05-mitades"
         data-composition-src="compositions/05-mitades.html"
-        data-start="6.5"
-        data-duration="11"
+        data-start="31.5"
+        data-duration="11.0"
+        data-track-index="0"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+      <div
+        id="escena-6-tiempo"
+        class="clip"
+        data-composition-id="s06-tiempo"
+        data-composition-src="compositions/06-tiempo.html"
+        data-start="42.5"
+        data-duration="6.0"
+        data-track-index="0"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <div
+        id="escena-7-cierre"
+        class="clip"
+        data-composition-id="s07-cierre"
+        data-composition-src="compositions/07-cierre.html"
+        data-start="48.5"
+        data-duration="8.0"
         data-track-index="0"
         data-width="1080"
         data-height="1920"
@@ -207,9 +260,19 @@
         var BLOCKS = [
           { t: 0.0, n: 1, section: "gancho", illus: false },
           { t: 2.5, n: 2, section: "gancho", illus: true },
-          { t: 6.5, n: 9, section: "las dos mitades", illus: false },
-          { t: 10.7, n: 10, section: "las dos mitades", illus: false },
-          { t: 14.9, n: 11, section: "las dos mitades", illus: false },
+          { t: 6.5, n: 3, section: "la vergüenza", illus: false },
+          { t: 11.5, n: 4, section: "la vergüenza", illus: false },
+          { t: 14.0, n: 5, section: "la prueba", illus: true },
+          { t: 16.7, n: 6, section: "la prueba", illus: true },
+          { t: 21.5, n: 7, section: "el quiebre", illus: false },
+          { t: 27.1, n: 8, section: "el quiebre", illus: false },
+          { t: 31.5, n: 9, section: "las dos mitades", illus: false },
+          { t: 35.7, n: 10, section: "las dos mitades", illus: false },
+          { t: 39.9, n: 11, section: "las dos mitades", illus: false },
+          { t: 42.5, n: 12, section: "el tiempo", illus: false },
+          { t: 45.2, n: 13, section: "el tiempo", illus: false },
+          { t: 48.5, n: 14, section: "cierre", illus: false },
+          { t: 53.5, n: 15, section: "cierre", illus: false },
         ];
 
         var elClock = document.getElementById("hud-clock");
@@ -255,7 +318,7 @@
           { v: 0 },
           {
             v: 1,
-            duration: 17.5,
+            duration: 56.5,
             ease: "none",
             onUpdate: function () {
               paintHud(tl.time());
@@ -268,14 +331,32 @@
            Escena 1 es oscura (tinta clara); escena 5 es dorada (tinta oscura). */
         tl.set("#root", { "--hud-ink": "245, 245, 245", "--hud-alpha": "0.55" }, 0);
         tl.set("#root", { "--vignette-color": "rgba(0, 0, 0, 0.52)" }, 0);
-        tl.set("#root", { "--hud-ink": "17, 17, 17", "--hud-alpha": "0.78" }, 6.5);
+        tl.set("#root", { "--hud-ink": "17, 17, 17", "--hud-alpha": "0.72" }, 14.0);
+        tl.set("#root", { "--vignette-color": "rgba(40, 34, 20, 0.26)" }, 14.0);
+        tl.set("#root", { "--hud-ink": "245, 245, 245", "--hud-alpha": "0.55" }, 21.5);
+        tl.set("#root", { "--vignette-color": "rgba(0, 0, 0, 0.52)" }, 21.5);
+        tl.set("#root", { "--hud-ink": "17, 17, 17", "--hud-alpha": "0.78" }, 27.25);
+        tl.set("#root", { "--vignette-color": "rgba(60, 40, 0, 0.3)" }, 27.25);
+        tl.set("#root", { "--hud-ink": "245, 245, 245", "--hud-alpha": "0.55" }, 43.4);
+        tl.set("#root", { "--vignette-color": "rgba(0, 0, 0, 0.52)" }, 43.4);
+
+        /* La escena 6 se queda con el reloj: el de la esquina se apaga para
+           que no haya dos. Una sub-composicion no puede animar elementos de
+           la raiz, asi que el relevo se hace desde aca. */
+        tl.set("#root", { "--hud-ink": "17, 17, 17", "--hud-alpha": "0.72" }, 48.5);
+        tl.set("#root", { "--vignette-color": "rgba(40, 34, 20, 0.26)" }, 48.5);
+        tl.set("#root", { "--hud-ink": "245, 245, 245", "--hud-alpha": "0.55" }, 53.3);
+        tl.set("#root", { "--vignette-color": "rgba(0, 0, 0, 0.52)" }, 53.3);
+
+        tl.set("#hud-clock", { opacity: 0 }, 42.5);
+        tl.set("#hud-clock", { opacity: 1 }, 48.4);
         tl.set("#root", { "--vignette-color": "rgba(60, 40, 0, 0.3)" }, 6.5);
 
         /* El grano deriva muy lento, sin azar: desplazamiento derivado del tiempo. */
         tl.fromTo(
           "#grain-overlay .grain-texture",
           { xPercent: 0, yPercent: 0 },
-          { xPercent: -6, yPercent: 4, duration: 17.5, ease: "none" },
+          { xPercent: -6, yPercent: 4, duration: 56.5, ease: "none" },
           0,
         );
 

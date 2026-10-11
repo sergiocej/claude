@@ -1,6 +1,6 @@
 ---
 format: 1080x1920
-duration: 55s
+duration: 56.5s
 message: "Un delito digital se resuelve cuando lo penal y lo técnico trabajan juntos, y a tiempo"
 arc: Corrección de percepción → Escalada → Punto de quiebre → Giro → Prueba → CTA
 audience: "Personas que sufrieron un fraude o delito digital y todavía no denunciaron"
@@ -10,6 +10,13 @@ mode: collaborative
 Los 15 bloques del guion se agrupan en 7 escenas. Las duraciones de abajo son
 estimaciones a 2,6 palabras/seg: **la duración real de la voz manda** y se
 reinyecta por script cuando llegue el audio de ElevenLabs.
+
+Las siete escenas están construidas y animadas. El corte cae en **56,5 s**
+contra los 55 s del brief: 1,5 s de más, dentro del rango de 45 a 60 que se
+pidió, y que la voz real va a corregir en cualquier dirección.
+
+Tiempos en el montaje: 1 → 0 s · 2 → 6,5 s · 3 → 14 s · 4 → 21,5 s ·
+5 → 31,5 s · 6 → 42,5 s · 7 → 48,5 s.
 
 ## Frame 1 — No te hackearon
 
@@ -42,7 +49,7 @@ etiqueta `datos ilustrativos`. El HUD aparece acá y no se va más.
 - duration: 7.5s
 - poster: 4s
 - transition_in: cut
-- status: outline
+- status: animated
 - voiceover: "Y cuando lo descubrís, lo primero que sentís no es bronca. Es vergüenza. Entonces no lo contás, y esperás."
 - src: compositions/02-verguenza.html
 - bloques: 3, 4
@@ -66,7 +73,7 @@ un `scaleY` a una línea, trivialmente determinista.
 - duration: 7.5s
 - poster: 6s
 - transition_in: wipe
-- status: outline
+- status: animated
 - voiceover: "Mientras esperás, la prueba se borra sola. Los registros se vencen, las conversaciones se pierden, el dinero se mueve."
 - src: compositions/03-prueba.html
 - bloques: 5, 6
@@ -87,7 +94,7 @@ Sin plazos de conservación en pantalla: poner un número exige verificar la nor
 - duration: 10s
 - poster: 3s
 - transition_in: cut
-- status: outline
+- status: animated
 - voiceover: "Hasta que un día te dicen que ya no se puede hacer nada. [silencio 0,6s] Y no es cierto. Llegaste tarde a un sistema que nadie te explicó."
 - src: compositions/04-quiebre.html
 - bloques: 7, 8
@@ -138,7 +145,7 @@ mensaje. El desfase de las dos mitades ya dice lo mismo.
 - duration: 6s
 - poster: 4s
 - transition_in: cut
-- status: outline
+- status: animated
 - voiceover: "Y eso cambia el tiempo de reacción. En materia penal, el tiempo es casi todo."
 - src: compositions/06-tiempo.html
 - bloques: 12, 13
@@ -156,7 +163,7 @@ video volviéndose el argumento. Cierra en oscuro con una sola línea en 400 px.
 - duration: 8s
 - poster: 6.5s
 - transition_in: cut
-- status: outline
+- status: animated
 - voiceover: "Si te está pasando, no esperes a estar seguro de que es grave. Escribinos por WhatsApp. La primera orientación es confidencial."
 - src: compositions/07-cierre.html
 - bloques: 14, 15

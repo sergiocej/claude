@@ -4,5 +4,6 @@
   "compositions/components/grain-overlay.html": "97a0da8f26feca9574abcf08b8186cef10ea4819b2aeabc30547ae16ed9ae80d",
   "compositions/components/perspective-marquee.html": "14d4544b748881f564ee3a2ffd55b1a630179b47b9d17bc3ee24667baf7c1698",
   "compositions/components/telemetry-hud.html": "cd6d5b261646f8edf55cce3ce8be6d05f5a2cc388b5fa55e2b00bf0a1173f704",
-  "compositions/components/vignette.html": "b825476ca7bb89c0afbd6f1157b9813ac6a1ac82e9aa13a7cecd7ae305ebb2d5"
+  "compositions/components/vignette.html": "b825476ca7bb89c0afbd6f1157b9813ac6a1ac82e9aa13a7cecd7ae305ebb2d5",
+  "compositions/sdf-iris.html": "ddc77afdad43bcd1b502b9f726b18bda8c822497817ff7fb836bff096d5614ac"
 }
