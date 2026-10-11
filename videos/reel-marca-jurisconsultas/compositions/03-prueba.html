@@ -211,6 +211,17 @@
         (function () {
           "use strict";
 
+          /* === BEATS-INICIO: lo escribe build.mjs, no editar a mano ===
+             B  = inicio local de cada bloque de esta escena
+             BF = fin local de cada bloque
+             D  = duración de la escena
+             W  = [bloque][palabra] -> [inicio, fin] local            */
+          var B = [0.13,2.948];
+          var BF = [2.648,7.364];
+          var D = 7.664;
+          var W = [[[0.13,0.665],[0.665,1.144],[1.144,1.344],[1.344,1.768],[1.768,1.968],[1.968,2.336],[2.336,2.648]],[[2.948,3.201],[3.201,3.785],[3.785,3.983],[3.983,4.401],[4.401,4.655],[4.655,5.514],[5.514,5.712],[5.712,6.185],[6.185,6.384],[6.384,6.802],[6.802,7],[7,7.364]]];
+          /* === BEATS-FIN === */
+
           var tl = gsap.timeline({ paused: true });
 
           /* Punto de convergencia. La escena 4 abre su círculo exactamente
@@ -219,85 +230,48 @@
           var SINK_Y = 1180;
 
           /* ---- Nace de la línea en la que colapsó la escena 2 ---- */
-          tl.fromTo(
-            "#s03-reveal",
-            { scaleY: 0.0025 },
-            { scaleY: 1, duration: 0.42, ease: "power3.out" },
-            0,
-          );
+          tl.fromTo("#s03-reveal", { scaleY: 0.0025 }, { scaleY: 1, duration: 0.42, ease: "power3.out" }, 0);
 
           /* ---- Bloque 5 ---- */
           tl.fromTo(
             "#s03-title span",
             { opacity: 0, y: 22, filter: "blur(18px)" },
-            {
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-              duration: 0.52,
-              stagger: 0.14,
-              ease: "power3.out",
-              immediateRender: false,
-            },
-            0.34,
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.52, stagger: 0.14, ease: "power3.out", immediateRender: false },
+            B[0],
           );
           tl.fromTo(
             "#s03-bubble",
             { opacity: 0, y: 34, scale: 0.94 },
             { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "power3.out" },
-            0.62,
+            B[0] + 0.28,
           );
 
           /* ---- Zoom que atraviesa la burbuja ----
              La burbuja está centrada, así que su desplazamiento respecto del
-             centro es cero y la contratraslación también. Por eso #s03-zoom-inner
-             no se mueve: el par sigue existiendo porque la regla lo exige y
-             porque si la burbuja se descentra, el arreglo es una sola línea.
-             Escala y contratraslación comparten posición, duración y ease. */
-          var ZOOM_AT = 2.62;
+             centro es cero y la contratraslación también. El par sigue
+             existiendo porque la regla lo exige y porque si la burbuja se
+             descentra, el arreglo es una línea. Escala y contratraslación
+             comparten posición, duración y ease. */
+          var ZOOM_AT = B[1] - 0.45;
           var ZOOM_DUR = 1.5;
-          tl.to(
-            "#s03-zoom-outer",
-            { scale: 7.2, duration: ZOOM_DUR, ease: "power3.inOut" },
-            ZOOM_AT,
-          );
-          tl.to(
-            "#s03-zoom-inner",
-            { x: 0, y: 0, duration: ZOOM_DUR, ease: "power3.inOut" },
-            ZOOM_AT,
-          );
-          tl.to(
-            "#s03-bubble",
-            { opacity: 0, duration: 0.5, ease: "power2.in" },
-            ZOOM_AT + 0.78,
-          );
+          tl.to("#s03-zoom-outer", { scale: 7.2, duration: ZOOM_DUR, ease: "power3.inOut" }, ZOOM_AT);
+          tl.to("#s03-zoom-inner", { x: 0, y: 0, duration: ZOOM_DUR, ease: "power3.inOut" }, ZOOM_AT);
+          tl.to("#s03-bubble", { opacity: 0, duration: 0.5, ease: "power2.in" }, ZOOM_AT + 0.78);
           tl.to("#s03-title", { opacity: 0, duration: 0.45, ease: "power2.in" }, ZOOM_AT + 0.3);
 
           /* Del otro lado de la burbuja está la planilla */
-          tl.fromTo(
-            "#s03-sheet",
-            { opacity: 0 },
-            { opacity: 1, duration: 0.5, ease: "power2.out" },
-            ZOOM_AT + 1.08,
-          );
+          tl.fromTo("#s03-sheet", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, ZOOM_AT + 1.08);
           tl.fromTo(
             ".s03-row",
             { opacity: 0, y: 26 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.42,
-              stagger: 0.07,
-              ease: "power3.out",
-              immediateRender: false,
-            },
+            { opacity: 1, y: 0, duration: 0.42, stagger: 0.07, ease: "power3.out", immediateRender: false },
             ZOOM_AT + 1.16,
           );
 
           /* ---- Las filas se desarman en partículas que viajan a un punto ----
-             Variante de disolución de la regla particle-burst, con una
-             diferencia deliberada: acá las partículas SÍ tienen destino. La
-             posición sigue siendo función pura de T (lerp origen→destino con
+             Variante de disolución de particle-burst con una diferencia
+             deliberada: acá las partículas SÍ tienen destino. La posición
+             sigue siendo función pura de T (lerp origen→destino con
              dispersión derivada del índice), así que un seek a cualquier
              momento da el cuadro correcto. */
           var COUNT = 36;
@@ -311,10 +285,7 @@
           /* Caja de la planilla en coordenadas del lienzo, tomada del CSS.
              Constantes escritas a mano, no medidas: en un montaje de varias
              escenas las posteriores pueden no estar maquetadas todavía. */
-          var BOX_X = 72,
-            BOX_Y = 560,
-            BOX_W = 936,
-            BOX_H = 420;
+          var BOX_X = 72, BOX_Y = 560, BOX_W = 936, BOX_H = 420;
 
           for (var i = 0; i < COUNT; i += 1) {
             var el = document.createElement("div");
@@ -324,7 +295,6 @@
               el: el,
               ox: BOX_X + prand(i * 13 + 1) * BOX_W,
               oy: BOX_Y + prand(i * 17 + 5) * BOX_H,
-              /* arco lateral para que no viajen en línea recta */
               bow: (prand(i * 7 + 3) * 2 - 1) * 190,
               lag: prand(i * 23 + 9) * 0.3,
             });
@@ -332,6 +302,7 @@
 
           var drive = { T: 0 };
           var FLIGHT = 1.45;
+          var VUELO_AT = Math.max(ZOOM_AT + 1.7, BF[1] - 1.4);
           tl.fromTo(
             drive,
             { T: 0 },
@@ -343,11 +314,10 @@
                 var T = drive.T;
                 for (var k = 0; k < parts.length; k += 1) {
                   var p = parts[k];
-                  /* cada partícula arranca con su propio retraso, todo horneado */
                   var u = (T - p.lag) / (1 - p.lag);
                   if (u < 0) u = 0;
                   if (u > 1) u = 1;
-                  var e = u * u * (3 - 2 * u); /* suavizado, sin acumular */
+                  var e = u * u * (3 - 2 * u);
                   var x = p.ox + (SINK_X - p.ox) * e + p.bow * Math.sin(e * Math.PI);
                   var y = p.oy + (SINK_Y - p.oy) * e;
                   var a = T === 0 ? 0 : Math.min(1, u * 5) * (1 - e * e);
@@ -356,11 +326,10 @@
                 }
               },
             },
-            5.72,
+            VUELO_AT,
           );
 
-          /* La planilla se va mientras las partículas se la llevan */
-          tl.to("#s03-sheet", { opacity: 0, duration: 0.85, ease: "power2.in" }, 5.95);
+          tl.to("#s03-sheet", { opacity: 0, duration: 0.85, ease: "power2.in" }, VUELO_AT + 0.23);
 
           window.__timelines["s03-prueba"] = tl;
           tl.seek(0);

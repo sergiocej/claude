@@ -66,8 +66,10 @@ copy. El texto corre, no golpea.
   bloques donde la pantalla no muestre ya el mismo texto.
 - Voz: ElevenLabs, modelo `eleven_multilingual_v2`, endpoint
   `text-to-speech/{voice_id}/with-timestamps` para tener el tiempo de cada
-  carácter. Un script de build inyecta esos tiempos en cada escena, así un
-  cambio de voz re-sincroniza todo.
+  carácter. `build.mjs` inyecta esos tiempos en cada escena, así un cambio de
+  voz re-sincroniza todo. **La cadena ya está armada y probada** con una voz
+  local descartable (Kokoro, `ef_dora`): `node build.mjs --elevenlabs` cambia
+  la fuente sin tocar ninguna escena.
 - CTA de cierre: WhatsApp. Primera orientación confidencial.
 
 ## Notes
@@ -97,3 +99,43 @@ copy. El texto corre, no golpea.
   disponibilidad.
 - Música y efectos de sonido: la librería de HyperFrames pide cuenta de HeyGen.
   Alternativas sin resolver: generarlos con Higgsfield, o MusicGen local.
+
+
+## Sincronía — cómo funciona
+
+`build.mjs` es el único lugar donde viven los tiempos. Ninguna escena tiene
+segundos absolutos escritos a mano: cada una recibe, entre los marcadores
+`BEATS-INICIO` / `BEATS-FIN`, cuatro variables que el script reescribe.
+
+| Variable | Qué trae |
+|---|---|
+| `B[i]` | inicio local del bloque *i* de esa escena |
+| `BF[i]` | fin local del bloque *i* |
+| `D` | duración de la escena |
+| `W[i][j]` | `[inicio, fin]` de la palabra *j* del bloque *i* |
+
+Las entradas importantes están ancladas a **palabras**, no a segundos: el fondo
+salta a rojo en la palabra "Es", las dos mitades entran en "técnica" y "penal",
+las credenciales puntúan en "porque". Si cambia la voz, eso se mueve solo.
+
+El script también reescribe `index.html`: duración del root, `data-start` y
+`data-duration` de las siete escenas, la tabla de bloques del HUD y los cambios
+de tinta.
+
+### Cambiar de voz
+
+1. Pedir a ElevenLabs cada bloque por `text-to-speech/{voice_id}/with-timestamps`.
+2. Guardar en `audio/elevenlabs.json` con la forma
+   `{ bloques: [ { n, duracion, caracteres: [{ c, inicio, fin }] } ] }`.
+3. `node build.mjs --elevenlabs`
+4. `npx hyperframes check` y renderizar.
+
+Con ElevenLabs los tiempos por palabra son reales. Con la voz local se estiman
+repartiendo cada bloque según el largo de sus palabras — buena aproximación,
+pero aproximación.
+
+### Verificación de la v2
+
+Detección de silencios sobre el MP4 renderizado contra la tabla de bloques: los
+15 bloques caen a **+0,04 s** de lo calculado, con desvío constante y sin
+acumulación a lo largo de los 55 s.

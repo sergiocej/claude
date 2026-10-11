@@ -3,3 +3,8 @@ snapshots/
 renders/
 node_modules/
 .hyperframes/
+
+# Voz generada: se regenera con `node build.mjs`.
+# Los .txt de cada bloque y la alineación sí se versionan.
+audio/**/*.wav
+audio/voz.wav

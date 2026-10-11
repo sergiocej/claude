@@ -142,71 +142,73 @@
         (function () {
           "use strict";
 
+          /* === BEATS-INICIO: lo escribe build.mjs, no editar a mano ===
+             B  = inicio local de cada bloque de esta escena
+             BF = fin local de cada bloque
+             D  = duración de la escena
+             W  = [bloque][palabra] -> [inicio, fin] local            */
+          var B = [0.3,5.024];
+          var BF = [4.524,7.157];
+          var D = 7.777;
+          var W = [[[0.3,0.441],[0.441,0.854],[0.854,1.049],[1.049,1.625],[1.625,1.82],[1.82,2.287],[2.287,2.537],[2.537,2.95],[2.95,3.145],[3.145,3.34],[3.34,3.753],[3.753,3.948],[3.948,4.524]],[[5.024,5.599],[5.599,5.815],[5.815,6.031],[6.031,6.486],[6.486,6.642],[6.642,7.157]]];
+          /* === BEATS-FIN === */
+
           var tl = gsap.timeline({ paused: true });
 
-          /* ---- Bloque 3, primera mitad: la corrección ---- */
+          /* Deriva lentísima de la grilla: el único decorativo vivo acá */
+          tl.fromTo("#s02-grid", { y: 0 }, { y: -58, duration: D, ease: "none" }, 0);
+
+          /* ---- Bloque 3: la corrección, anclada a las palabras ----
+             "lo primero que sentís" entra en la palabra 5, "no es bronca"
+             en la 9, y el golpe de color cae en "Es". */
+          var pre = W[0][4] ? W[0][4][0] : B[0] + 1.6;
+          var bro = W[0][8] ? W[0][8][0] : B[0] + 3.0;
+          var ver = W[0][11] ? W[0][11][0] : B[0] + 3.9;
+
           tl.fromTo(
             "#s02-pre",
             { opacity: 0, y: 18, filter: "blur(14px)" },
             { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" },
-            0.18,
+            pre,
           );
           tl.fromTo(
             "#s02-bronca",
             { opacity: 0, y: 24, filter: "blur(22px)" },
             { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out" },
-            0.62,
+            bro,
           );
 
-          /* Deriva lentísima de la grilla: el único decorativo vivo acá */
-          tl.fromTo("#s02-grid", { y: 0 }, { y: -58, duration: 7.5, ease: "none" }, 0);
-
-          /* ---- El golpe: el fondo salta a alerta exactamente en la palabra ----
-                  Intercambio por escala: el saliente se encoge y se va, el
-                  entrante llega con sobrepaso, los dos en el mismo centro. */
-          tl.to("#s02-alert", { opacity: 1, duration: 0.14, ease: "power2.in" }, 3.0);
-          tl.to(
-            "#s02-pre",
-            { opacity: 0, scale: 0.88, duration: 0.3, ease: "power2.in" },
-            2.9,
-          );
-          tl.to(
-            "#s02-bronca",
-            { opacity: 0, scale: 0.82, duration: 0.34, ease: "power2.in" },
-            2.9,
-          );
+          /* ---- El golpe: el fondo salta a alerta exactamente en la palabra.
+                  Intercambio por escala: el saliente se encoge, el entrante
+                  llega con sobrepaso, los dos en el mismo centro. ---- */
+          tl.to("#s02-alert", { opacity: 1, duration: 0.14, ease: "power2.in" }, ver);
+          tl.to("#s02-pre", { opacity: 0, scale: 0.88, duration: 0.3, ease: "power2.in" }, ver - 0.1);
+          tl.to("#s02-bronca", { opacity: 0, scale: 0.82, duration: 0.34, ease: "power2.in" }, ver - 0.1);
           tl.fromTo(
             "#s02-verguenza",
             { opacity: 0, scale: 0.72 },
             { opacity: 1, scale: 1, duration: 0.62, ease: "back.out(1.7)" },
-            3.02,
+            ver + 0.02,
           );
 
-          /* ---- Bloque 4: "entonces no lo contás, y esperás" ---- */
+          /* ---- Bloque 4 ---- */
           tl.fromTo(
             "#s02-espera",
             { opacity: 0, y: 26 },
             { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
-            5.05,
+            B[1],
           );
 
           /* ---- El apagado de tubo ----
-                  Hecho a mano: busqué "CRT power off", "screen shutoff" y
-                  "retro monitor" en el catálogo y no hay nada que sirva. Es un
-                  scaleY contra una línea brillante, trivialmente determinista.
-                  La línea sobrevive al colapso y es de donde nace la escena 3. */
-          tl.to("#s02-scanline", { opacity: 1, duration: 0.1, ease: "none" }, 6.82);
-          tl.to(
-            "#s02-tube",
-            { scaleY: 0.0025, duration: 0.34, ease: "power3.in" },
-            6.84,
-          );
-          tl.to("#s02-tube", { opacity: 0, duration: 0.12, ease: "none" }, 7.18);
-          tl.to(
-            "#s02-scanline",
-            { scaleX: 0.26, duration: 0.3, ease: "power2.inOut" },
-            7.2,
-          );
+                  A mano: busqué "CRT power off", "screen shutoff" y "retro
+                  monitor" en el catálogo y no hay nada que sirva. Es un scaleY
+                  contra una línea brillante. La línea sobrevive al colapso y
+                  es de donde nace la escena 3. */
+          var off = BF[1] + 0.04;
+          tl.to("#s02-scanline", { opacity: 1, duration: 0.1, ease: "none" }, off);
+          tl.to("#s02-tube", { scaleY: 0.0025, duration: 0.34, ease: "power3.in" }, off + 0.02);
+          tl.to("#s02-tube", { opacity: 0, duration: 0.12, ease: "none" }, off + 0.36);
+          tl.to("#s02-scanline", { scaleX: 0.26, duration: 0.3, ease: "power2.inOut" }, off + 0.38);
 
           window.__timelines["s02-verguenza"] = tl;
           tl.seek(0);

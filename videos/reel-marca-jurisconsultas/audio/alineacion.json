@@ -1,0 +1,963 @@
+{
+  "fuente": "kokoro-local (descartable)",
+  "total": 55.539,
+  "bloques": [
+    {
+      "n": 1,
+      "texto": "No te hackearon. Te eligieron.",
+      "inicio": 0.5,
+      "fin": 2.249,
+      "duracion": 1.749,
+      "silencioDespues": 0.3,
+      "palabras": [
+        {
+          "t": "No",
+          "inicio": 0.5,
+          "fin": 0.697
+        },
+        {
+          "t": "te",
+          "inicio": 0.697,
+          "fin": 0.894
+        },
+        {
+          "t": "hackearon.",
+          "inicio": 0.894,
+          "fin": 1.473
+        },
+        {
+          "t": "Te",
+          "inicio": 1.473,
+          "fin": 1.67
+        },
+        {
+          "t": "eligieron.",
+          "inicio": 1.67,
+          "fin": 2.249
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "texto": "Alguien miró tu rutina y calculó cuánto podía sacarte.",
+      "inicio": 2.549,
+      "fin": 5.792,
+      "duracion": 3.243,
+      "silencioDespues": 0.55,
+      "palabras": [
+        {
+          "t": "Alguien",
+          "inicio": 2.549,
+          "fin": 3.019
+        },
+        {
+          "t": "miró",
+          "inicio": 3.019,
+          "fin": 3.325
+        },
+        {
+          "t": "tu",
+          "inicio": 3.325,
+          "fin": 3.521
+        },
+        {
+          "t": "rutina",
+          "inicio": 3.521,
+          "fin": 3.936
+        },
+        {
+          "t": "y",
+          "inicio": 3.936,
+          "fin": 4.078
+        },
+        {
+          "t": "calculó",
+          "inicio": 4.078,
+          "fin": 4.547
+        },
+        {
+          "t": "cuánto",
+          "inicio": 4.547,
+          "fin": 4.962
+        },
+        {
+          "t": "podía",
+          "inicio": 4.962,
+          "fin": 5.323
+        },
+        {
+          "t": "sacarte.",
+          "inicio": 5.323,
+          "fin": 5.792
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "texto": "Y cuando lo descubrís, lo primero que sentís no es bronca. Es vergüenza.",
+      "inicio": 6.342,
+      "fin": 10.566,
+      "duracion": 4.224,
+      "silencioDespues": 0.5,
+      "palabras": [
+        {
+          "t": "Y",
+          "inicio": 6.342,
+          "fin": 6.483
+        },
+        {
+          "t": "cuando",
+          "inicio": 6.483,
+          "fin": 6.896
+        },
+        {
+          "t": "lo",
+          "inicio": 6.896,
+          "fin": 7.091
+        },
+        {
+          "t": "descubrís,",
+          "inicio": 7.091,
+          "fin": 7.667
+        },
+        {
+          "t": "lo",
+          "inicio": 7.667,
+          "fin": 7.862
+        },
+        {
+          "t": "primero",
+          "inicio": 7.862,
+          "fin": 8.329
+        },
+        {
+          "t": "que",
+          "inicio": 8.329,
+          "fin": 8.579
+        },
+        {
+          "t": "sentís",
+          "inicio": 8.579,
+          "fin": 8.992
+        },
+        {
+          "t": "no",
+          "inicio": 8.992,
+          "fin": 9.187
+        },
+        {
+          "t": "es",
+          "inicio": 9.187,
+          "fin": 9.382
+        },
+        {
+          "t": "bronca.",
+          "inicio": 9.382,
+          "fin": 9.795
+        },
+        {
+          "t": "Es",
+          "inicio": 9.795,
+          "fin": 9.99
+        },
+        {
+          "t": "vergüenza.",
+          "inicio": 9.99,
+          "fin": 10.566
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "texto": "Entonces no lo contás, y esperás.",
+      "inicio": 11.066,
+      "fin": 13.199,
+      "duracion": 2.133,
+      "silencioDespues": 0.75,
+      "palabras": [
+        {
+          "t": "Entonces",
+          "inicio": 11.066,
+          "fin": 11.641
+        },
+        {
+          "t": "no",
+          "inicio": 11.641,
+          "fin": 11.857
+        },
+        {
+          "t": "lo",
+          "inicio": 11.857,
+          "fin": 12.073
+        },
+        {
+          "t": "contás,",
+          "inicio": 12.073,
+          "fin": 12.528
+        },
+        {
+          "t": "y",
+          "inicio": 12.528,
+          "fin": 12.684
+        },
+        {
+          "t": "esperás.",
+          "inicio": 12.684,
+          "fin": 13.199
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "texto": "Mientras esperás, la prueba se borra sola.",
+      "inicio": 13.949,
+      "fin": 16.467,
+      "duracion": 2.517,
+      "silencioDespues": 0.3,
+      "palabras": [
+        {
+          "t": "Mientras",
+          "inicio": 13.949,
+          "fin": 14.484
+        },
+        {
+          "t": "esperás,",
+          "inicio": 14.484,
+          "fin": 14.963
+        },
+        {
+          "t": "la",
+          "inicio": 14.963,
+          "fin": 15.163
+        },
+        {
+          "t": "prueba",
+          "inicio": 15.163,
+          "fin": 15.587
+        },
+        {
+          "t": "se",
+          "inicio": 15.587,
+          "fin": 15.787
+        },
+        {
+          "t": "borra",
+          "inicio": 15.787,
+          "fin": 16.155
+        },
+        {
+          "t": "sola.",
+          "inicio": 16.155,
+          "fin": 16.467
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "texto": "Los registros se vencen, las conversaciones se pierden, el dinero se mueve.",
+      "inicio": 16.767,
+      "fin": 21.183,
+      "duracion": 4.416,
+      "silencioDespues": 0.55,
+      "palabras": [
+        {
+          "t": "Los",
+          "inicio": 16.767,
+          "fin": 17.02
+        },
+        {
+          "t": "registros",
+          "inicio": 17.02,
+          "fin": 17.604
+        },
+        {
+          "t": "se",
+          "inicio": 17.604,
+          "fin": 17.802
+        },
+        {
+          "t": "vencen,",
+          "inicio": 17.802,
+          "fin": 18.22
+        },
+        {
+          "t": "las",
+          "inicio": 18.22,
+          "fin": 18.474
+        },
+        {
+          "t": "conversaciones",
+          "inicio": 18.474,
+          "fin": 19.333
+        },
+        {
+          "t": "se",
+          "inicio": 19.333,
+          "fin": 19.531
+        },
+        {
+          "t": "pierden,",
+          "inicio": 19.531,
+          "fin": 20.004
+        },
+        {
+          "t": "el",
+          "inicio": 20.004,
+          "fin": 20.203
+        },
+        {
+          "t": "dinero",
+          "inicio": 20.203,
+          "fin": 20.621
+        },
+        {
+          "t": "se",
+          "inicio": 20.621,
+          "fin": 20.819
+        },
+        {
+          "t": "mueve.",
+          "inicio": 20.819,
+          "fin": 21.183
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "texto": "Hasta que un día te dicen que ya no se puede hacer nada.",
+      "inicio": 21.733,
+      "fin": 24.783,
+      "duracion": 3.051,
+      "silencioDespues": 0.6,
+      "palabras": [
+        {
+          "t": "Hasta",
+          "inicio": 21.733,
+          "fin": 22.048
+        },
+        {
+          "t": "que",
+          "inicio": 22.048,
+          "fin": 22.268
+        },
+        {
+          "t": "un",
+          "inicio": 22.268,
+          "fin": 22.44
+        },
+        {
+          "t": "día",
+          "inicio": 22.44,
+          "fin": 22.66
+        },
+        {
+          "t": "te",
+          "inicio": 22.66,
+          "fin": 22.832
+        },
+        {
+          "t": "dicen",
+          "inicio": 22.832,
+          "fin": 23.148
+        },
+        {
+          "t": "que",
+          "inicio": 23.148,
+          "fin": 23.368
+        },
+        {
+          "t": "ya",
+          "inicio": 23.368,
+          "fin": 23.54
+        },
+        {
+          "t": "no",
+          "inicio": 23.54,
+          "fin": 23.712
+        },
+        {
+          "t": "se",
+          "inicio": 23.712,
+          "fin": 23.884
+        },
+        {
+          "t": "puede",
+          "inicio": 23.884,
+          "fin": 24.2
+        },
+        {
+          "t": "hacer",
+          "inicio": 24.2,
+          "fin": 24.516
+        },
+        {
+          "t": "nada.",
+          "inicio": 24.516,
+          "fin": 24.783
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "texto": "Y no es cierto. Llegaste tarde a un sistema que nadie te explicó.",
+      "inicio": 25.383,
+      "fin": 29.053,
+      "duracion": 3.669,
+      "silencioDespues": 0.5,
+      "palabras": [
+        {
+          "t": "Y",
+          "inicio": 25.383,
+          "fin": 25.516
+        },
+        {
+          "t": "no",
+          "inicio": 25.516,
+          "fin": 25.7
+        },
+        {
+          "t": "es",
+          "inicio": 25.7,
+          "fin": 25.884
+        },
+        {
+          "t": "cierto.",
+          "inicio": 25.884,
+          "fin": 26.273
+        },
+        {
+          "t": "Llegaste",
+          "inicio": 26.273,
+          "fin": 26.763
+        },
+        {
+          "t": "tarde",
+          "inicio": 26.763,
+          "fin": 27.1
+        },
+        {
+          "t": "a",
+          "inicio": 27.1,
+          "fin": 27.233
+        },
+        {
+          "t": "un",
+          "inicio": 27.233,
+          "fin": 27.417
+        },
+        {
+          "t": "sistema",
+          "inicio": 27.417,
+          "fin": 27.857
+        },
+        {
+          "t": "que",
+          "inicio": 27.857,
+          "fin": 28.092
+        },
+        {
+          "t": "nadie",
+          "inicio": 28.092,
+          "fin": 28.429
+        },
+        {
+          "t": "te",
+          "inicio": 28.429,
+          "fin": 28.613
+        },
+        {
+          "t": "explicó.",
+          "inicio": 28.613,
+          "fin": 29.053
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "texto": "Un delito digital tiene dos mitades: la técnica y la penal.",
+      "inicio": 29.553,
+      "fin": 33.03,
+      "duracion": 3.477,
+      "silencioDespues": 0.32,
+      "palabras": [
+        {
+          "t": "Un",
+          "inicio": 29.553,
+          "fin": 29.746
+        },
+        {
+          "t": "delito",
+          "inicio": 29.746,
+          "fin": 30.156
+        },
+        {
+          "t": "digital",
+          "inicio": 30.156,
+          "fin": 30.618
+        },
+        {
+          "t": "tiene",
+          "inicio": 30.618,
+          "fin": 30.974
+        },
+        {
+          "t": "dos",
+          "inicio": 30.974,
+          "fin": 31.221
+        },
+        {
+          "t": "mitades:",
+          "inicio": 31.221,
+          "fin": 31.684
+        },
+        {
+          "t": "la",
+          "inicio": 31.684,
+          "fin": 31.878
+        },
+        {
+          "t": "técnica",
+          "inicio": 31.878,
+          "fin": 32.341
+        },
+        {
+          "t": "y",
+          "inicio": 32.341,
+          "fin": 32.481
+        },
+        {
+          "t": "la",
+          "inicio": 32.481,
+          "fin": 32.675
+        },
+        {
+          "t": "penal.",
+          "inicio": 32.675,
+          "fin": 33.03
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "texto": "Casi siempre se trabajan por separado, y el peritaje llega tarde.",
+      "inicio": 33.35,
+      "fin": 37.211,
+      "duracion": 3.861,
+      "silencioDespues": 0.32,
+      "palabras": [
+        {
+          "t": "Casi",
+          "inicio": 33.35,
+          "fin": 33.656
+        },
+        {
+          "t": "siempre",
+          "inicio": 33.656,
+          "fin": 34.127
+        },
+        {
+          "t": "se",
+          "inicio": 34.127,
+          "fin": 34.324
+        },
+        {
+          "t": "trabajan",
+          "inicio": 34.324,
+          "fin": 34.849
+        },
+        {
+          "t": "por",
+          "inicio": 34.849,
+          "fin": 35.1
+        },
+        {
+          "t": "separado,",
+          "inicio": 35.1,
+          "fin": 35.625
+        },
+        {
+          "t": "y",
+          "inicio": 35.625,
+          "fin": 35.767
+        },
+        {
+          "t": "el",
+          "inicio": 35.767,
+          "fin": 35.964
+        },
+        {
+          "t": "peritaje",
+          "inicio": 35.964,
+          "fin": 36.489
+        },
+        {
+          "t": "llega",
+          "inicio": 36.489,
+          "fin": 36.85
+        },
+        {
+          "t": "tarde.",
+          "inicio": 36.85,
+          "fin": 37.211
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "texto": "Acá se trabajan juntas, porque estudié las dos.",
+      "inicio": 37.531,
+      "fin": 40.113,
+      "duracion": 2.581,
+      "silencioDespues": 0.5,
+      "palabras": [
+        {
+          "t": "Acá",
+          "inicio": 37.531,
+          "fin": 37.765
+        },
+        {
+          "t": "se",
+          "inicio": 37.765,
+          "fin": 37.948
+        },
+        {
+          "t": "trabajan",
+          "inicio": 37.948,
+          "fin": 38.436
+        },
+        {
+          "t": "juntas,",
+          "inicio": 38.436,
+          "fin": 38.822
+        },
+        {
+          "t": "porque",
+          "inicio": 38.822,
+          "fin": 39.208
+        },
+        {
+          "t": "estudié",
+          "inicio": 39.208,
+          "fin": 39.645
+        },
+        {
+          "t": "las",
+          "inicio": 39.645,
+          "fin": 39.879
+        },
+        {
+          "t": "dos.",
+          "inicio": 39.879,
+          "fin": 40.113
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "texto": "Y eso cambia el tiempo de reacción.",
+      "inicio": 40.613,
+      "fin": 42.682,
+      "duracion": 2.069,
+      "silencioDespues": 0.3,
+      "palabras": [
+        {
+          "t": "Y",
+          "inicio": 40.613,
+          "fin": 40.75
+        },
+        {
+          "t": "eso",
+          "inicio": 40.75,
+          "fin": 40.993
+        },
+        {
+          "t": "cambia",
+          "inicio": 40.993,
+          "fin": 41.394
+        },
+        {
+          "t": "el",
+          "inicio": 41.394,
+          "fin": 41.584
+        },
+        {
+          "t": "tiempo",
+          "inicio": 41.584,
+          "fin": 41.985
+        },
+        {
+          "t": "de",
+          "inicio": 41.985,
+          "fin": 42.175
+        },
+        {
+          "t": "reacción.",
+          "inicio": 42.175,
+          "fin": 42.682
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "texto": "En materia penal, el tiempo es casi todo.",
+      "inicio": 42.982,
+      "fin": 45.478,
+      "duracion": 2.496,
+      "silencioDespues": 0.6,
+      "palabras": [
+        {
+          "t": "En",
+          "inicio": 42.982,
+          "fin": 43.183
+        },
+        {
+          "t": "materia",
+          "inicio": 43.183,
+          "fin": 43.662
+        },
+        {
+          "t": "penal,",
+          "inicio": 43.662,
+          "fin": 44.029
+        },
+        {
+          "t": "el",
+          "inicio": 44.029,
+          "fin": 44.23
+        },
+        {
+          "t": "tiempo",
+          "inicio": 44.23,
+          "fin": 44.653
+        },
+        {
+          "t": "es",
+          "inicio": 44.653,
+          "fin": 44.854
+        },
+        {
+          "t": "casi",
+          "inicio": 44.854,
+          "fin": 45.166
+        },
+        {
+          "t": "todo.",
+          "inicio": 45.166,
+          "fin": 45.478
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "texto": "Si te está pasando, no esperes a estar seguro de que es grave.",
+      "inicio": 46.078,
+      "fin": 49.449,
+      "duracion": 3.371,
+      "silencioDespues": 0.45,
+      "palabras": [
+        {
+          "t": "Si",
+          "inicio": 46.078,
+          "fin": 46.254
+        },
+        {
+          "t": "te",
+          "inicio": 46.254,
+          "fin": 46.431
+        },
+        {
+          "t": "está",
+          "inicio": 46.431,
+          "fin": 46.705
+        },
+        {
+          "t": "pasando,",
+          "inicio": 46.705,
+          "fin": 47.126
+        },
+        {
+          "t": "no",
+          "inicio": 47.126,
+          "fin": 47.303
+        },
+        {
+          "t": "esperes",
+          "inicio": 47.303,
+          "fin": 47.724
+        },
+        {
+          "t": "a",
+          "inicio": 47.724,
+          "fin": 47.852
+        },
+        {
+          "t": "estar",
+          "inicio": 47.852,
+          "fin": 48.175
+        },
+        {
+          "t": "seguro",
+          "inicio": 48.175,
+          "fin": 48.547
+        },
+        {
+          "t": "de",
+          "inicio": 48.547,
+          "fin": 48.724
+        },
+        {
+          "t": "que",
+          "inicio": 48.724,
+          "fin": 48.949
+        },
+        {
+          "t": "es",
+          "inicio": 48.949,
+          "fin": 49.125
+        },
+        {
+          "t": "grave.",
+          "inicio": 49.125,
+          "fin": 49.449
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "texto": "Escribinos por WhatsApp. La primera orientación es confidencial.",
+      "inicio": 49.899,
+      "fin": 53.739,
+      "duracion": 3.84,
+      "silencioDespues": 0,
+      "palabras": [
+        {
+          "t": "Escribinos",
+          "inicio": 49.899,
+          "fin": 50.556
+        },
+        {
+          "t": "por",
+          "inicio": 50.556,
+          "fin": 50.816
+        },
+        {
+          "t": "WhatsApp.",
+          "inicio": 50.816,
+          "fin": 51.36
+        },
+        {
+          "t": "La",
+          "inicio": 51.36,
+          "fin": 51.564
+        },
+        {
+          "t": "primera",
+          "inicio": 51.564,
+          "fin": 52.051
+        },
+        {
+          "t": "orientación",
+          "inicio": 52.051,
+          "fin": 52.765
+        },
+        {
+          "t": "es",
+          "inicio": 52.765,
+          "fin": 52.968
+        },
+        {
+          "t": "confidencial.",
+          "inicio": 52.968,
+          "fin": 53.739
+        }
+      ]
+    }
+  ],
+  "escenas": [
+    {
+      "id": "s01-hook",
+      "host": "escena-1-gancho",
+      "archivo": "01-hook.html",
+      "bloques": [
+        1,
+        2
+      ],
+      "cierre": 0.25,
+      "inicio": 0,
+      "duracion": 6.042
+    },
+    {
+      "id": "s02-verguenza",
+      "host": "escena-2-verguenza",
+      "archivo": "02-verguenza.html",
+      "bloques": [
+        3,
+        4
+      ],
+      "cierre": 0.62,
+      "inicio": 6.042,
+      "duracion": 7.777
+    },
+    {
+      "id": "s03-prueba",
+      "host": "escena-3-prueba",
+      "archivo": "03-prueba.html",
+      "bloques": [
+        5,
+        6
+      ],
+      "cierre": 0.3,
+      "inicio": 13.819,
+      "duracion": 7.664
+    },
+    {
+      "id": "s04-quiebre",
+      "host": "escena-4-quiebre",
+      "archivo": "04-quiebre.html",
+      "bloques": [
+        7,
+        8
+      ],
+      "cierre": 0.25,
+      "inicio": 21.483,
+      "duracion": 7.82
+    },
+    {
+      "id": "s05-mitades",
+      "host": "escena-5-mitades",
+      "archivo": "05-mitades.html",
+      "bloques": [
+        9,
+        10,
+        11
+      ],
+      "cierre": 0.25,
+      "inicio": 29.303,
+      "duracion": 11.06
+    },
+    {
+      "id": "s06-tiempo",
+      "host": "escena-6-tiempo",
+      "archivo": "06-tiempo.html",
+      "bloques": [
+        12,
+        13
+      ],
+      "cierre": 0.3,
+      "inicio": 40.363,
+      "duracion": 5.415
+    },
+    {
+      "id": "s07-cierre",
+      "host": "escena-7-cierre",
+      "archivo": "07-cierre.html",
+      "bloques": [
+        14,
+        15
+      ],
+      "cierre": 1.8,
+      "inicio": 45.778,
+      "duracion": 9.761
+    }
+  ]
+}

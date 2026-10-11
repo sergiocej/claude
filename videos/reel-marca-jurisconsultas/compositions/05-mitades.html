@@ -219,110 +219,89 @@
         (function () {
           "use strict";
 
+          /* === BEATS-INICIO: lo escribe build.mjs, no editar a mano ===
+             B  = inicio local de cada bloque de esta escena
+             BF = fin local de cada bloque
+             D  = duración de la escena
+             W  = [bloque][palabra] -> [inicio, fin] local            */
+          var B = [0.25,4.047,8.228];
+          var BF = [3.727,7.908,10.81];
+          var D = 11.06;
+          var W = [[[0.25,0.443],[0.443,0.853],[0.853,1.315],[1.315,1.671],[1.671,1.918],[1.918,2.381],[2.381,2.575],[2.575,3.038],[3.038,3.178],[3.178,3.372],[3.372,3.727]],[[4.047,4.353],[4.353,4.824],[4.824,5.021],[5.021,5.546],[5.546,5.797],[5.797,6.322],[6.322,6.464],[6.464,6.661],[6.661,7.186],[7.186,7.547],[7.547,7.908]],[[8.228,8.462],[8.462,8.645],[8.645,9.133],[9.133,9.519],[9.519,9.905],[9.905,10.342],[10.342,10.576],[10.576,10.81]]];
+          /* === BEATS-FIN === */
+
           var tl = gsap.timeline({ paused: true });
 
           var TILT = 13;
           var OVER = 8;
 
           /* ---- Fondo: dos resplandores en contrafase, nunca sincronizados ---- */
-          tl.fromTo(
-            "#s05-glow-a",
-            { scale: 0.92, opacity: 0.8 },
-            { scale: 1.08, opacity: 1, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: 1 },
-            0,
-          );
-          tl.fromTo(
-            "#s05-glow-b",
-            { scale: 1.08, opacity: 1 },
-            { scale: 0.92, opacity: 0.8, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: 1 },
-            0,
-          );
-          tl.fromTo("#s05-ring", { rotate: 0, scale: 0.99 }, { rotate: -6, scale: 1.02, duration: 11, ease: "none" }, 0);
+          tl.fromTo("#s05-glow-a", { scale: 0.92, opacity: 0.8 }, { scale: 1.08, opacity: 1, duration: D / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+          tl.fromTo("#s05-glow-b", { scale: 1.08, opacity: 1 }, { scale: 0.92, opacity: 0.8, duration: D / 2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+          tl.fromTo("#s05-ring", { rotate: 0, scale: 0.99 }, { rotate: -6, scale: 1.02, duration: D, ease: "none" }, 0);
 
-          /* ---- Escena 1 del blueprint: el título baja a su lugar ---- */
-          tl.fromTo(
-            "#s05-title",
-            { opacity: 0, y: -46 },
-            { opacity: 1, y: 0, duration: 0.78, ease: "power3.out" },
-            0.1,
-          );
+          /* ---- La firma, anclada a las palabras: el título cae en "dos",
+                  la mitad técnica en "técnica" y la penal en "penal". ---- */
+          var at_dos = W[0][4] ? W[0][4][0] : B[0] + 1.6;
+          var at_tec = W[0][7] ? W[0][7][0] : B[0] + 2.8;
+          var at_pen = W[0][10] ? W[0][10][0] : B[0] + 3.4;
 
-          /* ---- Escena 2: la firma. Entrada desde alas opuestas con
-                  inclinaciones espejadas, la de abajo 0,2 s detrás. ---- */
+          tl.fromTo("#s05-title", { opacity: 0, y: -46 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, at_dos - 0.5);
           tl.fromTo(
             "#s05-tecnica",
             { opacity: 0, y: -330, rotateX: TILT + OVER },
-            { opacity: 1, y: 0, rotateX: TILT, duration: 1.05, ease: "power3.out" },
-            0.46,
+            { opacity: 1, y: 0, rotateX: TILT, duration: 1.0, ease: "power3.out" },
+            at_tec - 0.45,
           );
           tl.fromTo(
             "#s05-penal",
             { opacity: 0, y: 330, rotateX: -TILT - OVER },
-            { opacity: 1, y: 0, rotateX: -TILT, duration: 1.05, ease: "power3.out" },
-            0.66,
+            { opacity: 1, y: 0, rotateX: -TILT, duration: 1.0, ease: "power3.out" },
+            at_pen - 0.45,
           );
 
-          /* La costura del medio se dibuja con el aterrizaje. scaleX, no width:
-             las propiedades de layout se enganchan al píxel entero y la cola
-             del ease tiembla bajo la captura cuadro por cuadro. */
-          tl.fromTo(
-            "#s05-seam",
-            { scaleX: 0, opacity: 0 },
-            { scaleX: 1, opacity: 1, duration: 0.7, ease: "power3.out" },
-            1.0,
-          );
+          /* La costura se dibuja con el aterrizaje. scaleX, no width: las
+             propiedades de layout se enganchan al píxel entero y la cola del
+             ease tiembla bajo la captura cuadro por cuadro. */
+          tl.fromTo("#s05-seam", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.7, ease: "power3.out" }, at_pen - 0.1);
 
           /* La copia sube durante el asentamiento, no después */
           tl.fromTo(
             ".s05-eyebrow, .s05-headline, .s05-body",
             { opacity: 0, y: 20 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              stagger: 0.07,
-              ease: "power2.out",
-              immediateRender: false,
-            },
-            1.12,
+            { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: "power2.out", immediateRender: false },
+            at_tec - 0.2,
           );
 
-          /* ---- Reposo en contrafase: signos opuestos, nunca cinta transportadora ---- */
-          tl.to(
-            "#s05-tecnica",
-            { y: -7, duration: 1.1, ease: "sine.inOut", yoyo: true, repeat: 1 },
-            1.95,
-          );
-          tl.to(
-            "#s05-penal",
-            { y: 7, duration: 1.1, ease: "sine.inOut", yoyo: true, repeat: 1 },
-            1.95,
-          );
+          /* ---- Reposo en contrafase: signos opuestos ----
+             La ventana se calcula contra el arranque del bloque 10, que es
+             quien se queda con "y" después. Si la voz cambia, el reposo se
+             acorta solo en vez de pisarse con la separación. */
+          var IDLE_A = at_pen + 0.65;
+          var IDLE_B = B[1] + 0.1;
+          var IDLE_D = Math.max(0.35, (IDLE_B - IDLE_A) / 2);
+          tl.to("#s05-tecnica", { y: -7, duration: IDLE_D, ease: "sine.inOut", yoyo: true, repeat: 1 }, IDLE_A);
+          tl.to("#s05-penal", { y: 7, duration: IDLE_D, ease: "sine.inOut", yoyo: true, repeat: 1 }, IDLE_A);
 
-          /* ---- Bloque 10: "casi siempre se trabajan por separado".
-                  Las mitades se abren y se desfasan. El desfase se expresa en
-                  el tiempo (duraciones y arranques distintos), no en una
+          /* ---- Bloque 10: se abren y se desfasan. El desfase se expresa en
+                  el tiempo (arranques y duraciones distintos), no en una
                   segunda propiedad: y tiene un solo dueño por tramo. ---- */
-          tl.to("#s05-tecnica", { y: -96, duration: 1.5, ease: "power2.inOut" }, 4.25);
-          tl.to("#s05-penal", { y: 104, duration: 2.1, ease: "power2.inOut" }, 4.62);
-          tl.to("#s05-seam", { opacity: 0.2, duration: 1.2, ease: "power1.inOut" }, 4.4);
-          tl.to(
-            "#s05-title",
-            { opacity: 0.32, y: -18, duration: 1.0, ease: "power2.out" },
-            4.3,
-          );
+          tl.to("#s05-tecnica", { y: -96, duration: 1.5, ease: "power2.inOut" }, B[1] + 0.2);
+          tl.to("#s05-penal", { y: 104, duration: 2.1, ease: "power2.inOut" }, B[1] + 0.55);
+          tl.to("#s05-seam", { opacity: 0.2, duration: 1.2, ease: "power1.inOut" }, B[1] + 0.35);
+          tl.to("#s05-title", { opacity: 0.32, y: -18, duration: 1.0, ease: "power2.out" }, B[1] + 0.25);
 
-          /* ---- Bloque 11: "acá se trabajan juntas". Encastran. ---- */
-          tl.to("#s05-tecnica", { y: 0, rotateX: 4, duration: 0.92, ease: "power3.inOut" }, 8.45);
-          tl.to("#s05-penal", { y: 0, rotateX: -4, duration: 0.92, ease: "power3.inOut" }, 8.45);
-          tl.to("#s05-seam", { opacity: 1, duration: 0.6, ease: "power2.out" }, 8.9);
+          /* ---- Bloque 11: encastran ---- */
+          tl.to("#s05-tecnica", { y: 0, rotateX: 4, duration: 0.92, ease: "power3.inOut" }, B[2]);
+          tl.to("#s05-penal", { y: 0, rotateX: -4, duration: 0.92, ease: "power3.inOut" }, B[2]);
+          tl.to("#s05-seam", { opacity: 1, duration: 0.6, ease: "power2.out" }, B[2] + 0.45);
 
-          /* El único sobrepaso de la escena: las credenciales puntúan el cierre */
+          /* El único sobrepaso: las credenciales puntúan el cierre, en "porque" */
           tl.fromTo(
             "#s05-creds",
             { opacity: 0, scale: 0.86, y: 24 },
-            { opacity: 1, scale: 1, y: 0, duration: 0.72, ease: "back.out(1.9)" },
-            9.35,
+            { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "back.out(1.9)" },
+            W[2][4] ? W[2][4][0] : B[2] + 1.1,
           );
 
           window.__timelines["s05-mitades"] = tl;

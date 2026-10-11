@@ -237,46 +237,52 @@
         (function () {
           "use strict";
 
+          /* === BEATS-INICIO: lo escribe build.mjs, no editar a mano ===
+             B  = inicio local de cada bloque de esta escena
+             BF = fin local de cada bloque
+             D  = duración de la escena
+             W  = [bloque][palabra] -> [inicio, fin] local            */
+          var B = [0.5,2.549];
+          var BF = [2.249,5.792];
+          var D = 6.042;
+          var W = [[[0.5,0.697],[0.697,0.894],[0.894,1.473],[1.473,1.67],[1.67,2.249]],[[2.549,3.019],[3.019,3.325],[3.325,3.521],[3.521,3.936],[3.936,4.078],[4.078,4.547],[4.547,4.962],[4.962,5.323],[5.323,5.792]]];
+          /* === BEATS-FIN === */
+
           var tl = gsap.timeline({ paused: true });
 
           /* ---- Respiración compartida de los decorativos ---- */
           tl.fromTo(
             "#s01-glow",
             { scale: 0.94, opacity: 0.75 },
-            { scale: 1.06, opacity: 1, duration: 3.25, ease: "sine.inOut", yoyo: true, repeat: 1 },
+            { scale: 1.06, opacity: 1, duration: D / 2, ease: "sine.inOut", yoyo: true, repeat: 1 },
             0,
           );
           tl.fromTo(
             "#s01-target",
             { rotate: 0, scale: 0.98 },
-            { rotate: 7, scale: 1.02, duration: 6.5, ease: "none" },
+            { rotate: 7, scale: 1.02, duration: D, ease: "none" },
             0,
           );
 
-          /* ---- Bloque 1: entrada palabra por palabra con desenfoque ----
+          /* ---- Bloque 1: cada palabra entra cuando se la dice ----
              Receta del componente blur-in del registro, llevada a tamaño de
-             display. El peso de cada palabra fija su tiempo: "hackearon."
-             es el ancla y se toma más tiempo que el resto. */
-          var words = [
-            { sel: "#s01-w1", at: 0.15, dur: 0.4, blur: 16, y: 16 },
-            { sel: "#s01-w2", at: 0.33, dur: 0.4, blur: 16, y: 16 },
-            { sel: "#s01-w3", at: 0.6, dur: 0.58, blur: 26, y: 26 },
-            { sel: "#s01-w4", at: 1.35, dur: 0.4, blur: 16, y: 14 },
-            { sel: "#s01-w5", at: 1.53, dur: 0.52, blur: 22, y: 20 },
+             display. El ancla ("hackearon.") se toma más tiempo que el resto. */
+          var sel = ["#s01-w1", "#s01-w2", "#s01-w3", "#s01-w4", "#s01-w5"];
+          var peso = [
+            { dur: 0.4, blur: 16, y: 16 },
+            { dur: 0.4, blur: 16, y: 16 },
+            { dur: 0.58, blur: 26, y: 26 },
+            { dur: 0.4, blur: 16, y: 14 },
+            { dur: 0.52, blur: 22, y: 20 },
           ];
-          for (var i = 0; i < words.length; i += 1) {
-            var w = words[i];
+          for (var i = 0; i < sel.length; i += 1) {
+            var w = peso[i];
+            var at = W[0][i] ? W[0][i][0] : B[0] + i * 0.3;
             tl.fromTo(
-              w.sel,
+              sel[i],
               { opacity: 0, y: w.y, filter: "blur(" + w.blur + "px)" },
-              {
-                opacity: 1,
-                y: 0,
-                filter: "blur(0px)",
-                duration: w.dur,
-                ease: "power3.out",
-              },
-              w.at,
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: w.dur, ease: "power3.out" },
+              at,
             );
           }
 
@@ -285,48 +291,24 @@
             "#s01-hook-text",
             { y: 0, scale: 1 },
             { y: -380, scale: 0.56, duration: 0.72, ease: "power2.inOut" },
-            2.34,
+            B[1] - 0.26,
           );
-          tl.to("#s01-turn", { opacity: 0.4, duration: 0.5, ease: "power1.out" }, 2.5);
+          tl.to("#s01-turn", { opacity: 0.4, duration: 0.5, ease: "power1.out" }, B[1] - 0.1);
 
-          /* ---- Bloque 2: las franjas entran y ruedan en direcciones opuestas ---- */
-          tl.set("#s01-strips", { opacity: 1 }, 2.58);
+          /* ---- Bloque 2: las franjas ruedan en direcciones opuestas ---- */
+          var rodada = D - (B[1] + 0.08) - 0.05;
+          tl.set("#s01-strips", { opacity: 1 }, B[1] + 0.05);
+          tl.fromTo("#s01-strip-a", { "--mx": "0px" }, { "--mx": "-520px", duration: rodada, ease: "none" }, B[1] + 0.08);
+          tl.fromTo("#s01-strip-b", { "--mx": "-520px" }, { "--mx": "60px", duration: rodada, ease: "none" }, B[1] + 0.08);
+          tl.fromTo("#s01-strip-c", { "--mx": "0px" }, { "--mx": "-440px", duration: rodada, ease: "none" }, B[1] + 0.08);
 
-          /* Una sola propiedad por franja (--mx), así nada pelea por el transform. */
-          tl.fromTo(
-            "#s01-strip-a",
-            { "--mx": "0px" },
-            { "--mx": "-520px", duration: 3.9, ease: "none" },
-            2.58,
-          );
-          tl.fromTo(
-            "#s01-strip-b",
-            { "--mx": "-520px" },
-            { "--mx": "60px", duration: 3.9, ease: "none" },
-            2.58,
-          );
-          tl.fromTo(
-            "#s01-strip-c",
-            { "--mx": "0px" },
-            { "--mx": "-440px", duration: 3.9, ease: "none" },
-            2.58,
-          );
-
-          /* Entrada escalonada de las tres franjas, tope 0,5 s para que se
-             lea como una sola llegada. Solo opacidad: el transform de cada
-             franja ya lo gobierna el CSS a través de --mx, y dos dueños para
-             la misma propiedad es un bug silencioso. */
+          /* Entrada escalonada, tope 0,5 s para que se lea como una llegada.
+             Solo opacidad: el transform ya lo gobierna el CSS vía --mx. */
           tl.fromTo(
             ".s01-strip",
             { opacity: 0 },
-            {
-              opacity: 1,
-              duration: 0.52,
-              stagger: 0.16,
-              ease: "power3.out",
-              immediateRender: false,
-            },
-            2.62,
+            { opacity: 1, duration: 0.52, stagger: 0.16, ease: "power3.out", immediateRender: false },
+            B[1] + 0.1,
           );
 
           window.__timelines["s01-hook"] = tl;

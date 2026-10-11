@@ -145,6 +145,17 @@
         (function () {
           "use strict";
 
+          /* === BEATS-INICIO: lo escribe build.mjs, no editar a mano ===
+             B  = inicio local de cada bloque de esta escena
+             BF = fin local de cada bloque
+             D  = duración de la escena
+             W  = [bloque][palabra] -> [inicio, fin] local            */
+          var B = [0.25,3.9];
+          var BF = [3.3,7.57];
+          var D = 7.82;
+          var W = [[[0.25,0.565],[0.565,0.785],[0.785,0.957],[0.957,1.177],[1.177,1.349],[1.349,1.665],[1.665,1.885],[1.885,2.057],[2.057,2.229],[2.229,2.401],[2.401,2.717],[2.717,3.033],[3.033,3.3]],[[3.9,4.033],[4.033,4.217],[4.217,4.401],[4.401,4.79],[4.79,5.28],[5.28,5.617],[5.617,5.75],[5.75,5.934],[5.934,6.374],[6.374,6.609],[6.609,6.946],[6.946,7.13],[7.13,7.57]]];
+          /* === BEATS-FIN === */
+
           var tl = gsap.timeline({ paused: true });
 
           /* Mismo punto que el sumidero de partículas de la escena 3. */
@@ -152,54 +163,52 @@
           var IRIS_Y = 1180;
           var IRIS_R = 1350; /* alcanza las esquinas más lejanas desde ese punto */
 
-          /* ---- Bloque 7: quietud. Entra y se queda. ---- */
-          tl.fromTo(
-            "#s04-dead span",
-            { opacity: 0, y: 22, filter: "blur(20px)" },
-            {
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-              duration: 0.6,
-              stagger: 0.16,
-              ease: "power3.out",
-            },
-            0.2,
-          );
+          /* ---- Bloque 7: quietud. Las tres líneas entran con la voz. ---- */
+          var spans = ["#s04-dead .soft", "#s04-dead span:nth-of-type(2)", "#s04-dead span:nth-of-type(3)"];
+          var anclas = [0, 7, 11];
+          for (var i = 0; i < spans.length; i += 1) {
+            var at = W[0][anclas[i]] ? W[0][anclas[i]][0] : B[0] + i * 0.9;
+            tl.fromTo(
+              spans[i],
+              { opacity: 0, y: 22, filter: "blur(20px)" },
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out" },
+              at,
+            );
+          }
 
-          /* ---- El silencio de 0,6 s ----
+          /* ---- El silencio ----
              No pasa nada salvo que el foco se va. Es el único momento del
              video en que la imagen pierde nitidez a propósito: la frase se
              desenfoca justo antes de que la desmientan. */
-          tl.to("#s04-dead", { filter: "blur(9px)", opacity: 0.55, duration: 0.55, ease: "power2.in" }, 4.95);
-          tl.to("#s04-backdrop", { filter: "blur(16px)", duration: 0.55, ease: "power2.in" }, 4.95);
+          var callado = BF[0] + 0.05;
+          tl.to("#s04-dead", { filter: "blur(9px)", opacity: 0.55, duration: 0.5, ease: "power2.in" }, callado);
+          tl.to("#s04-backdrop", { filter: "blur(16px)", duration: 0.5, ease: "power2.in" }, callado);
 
           /* ---- Bloque 8: el giro. El iris se abre desde el sumidero. ---- */
+          /* Nunca antes de que termine el desenfoque del silencio: dos tweens
+             sobre la misma opacidad se pisan y el orden decide, no el diseño. */
+          tl.to("#s04-dead", { opacity: 0, duration: 0.28, ease: "power2.in" }, Math.max(B[1] - 0.22, callado + 0.52));
           tl.fromTo(
             "#s04-iris",
             { clipPath: "circle(0px at " + IRIS_X + "px " + IRIS_Y + "px)" },
             {
               clipPath: "circle(" + IRIS_R + "px at " + IRIS_X + "px " + IRIS_Y + "px)",
-              duration: 1.15,
+              duration: 1.0,
               ease: "power3.inOut",
             },
-            5.62,
+            B[1] - 0.3,
           );
-          /* Una vez que el iris cubrió todo, la frase desmentida no tiene por
-             qué seguir existiendo detrás del dorado. */
-          tl.to("#s04-dead", { opacity: 0, duration: 0.28, ease: "power2.in" }, 5.85);
-
           tl.fromTo(
             "#s04-turn .hit",
             { opacity: 0, y: 26, filter: "blur(16px)" },
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out" },
-            6.1,
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.55, ease: "power3.out" },
+            B[1] + 0.12,
           );
           tl.fromTo(
             "#s04-turn .sub",
             { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
-            6.72,
+            W[1][4] ? W[1][4][0] : B[1] + 1.1,
           );
 
           window.__timelines["s04-quiebre"] = tl;

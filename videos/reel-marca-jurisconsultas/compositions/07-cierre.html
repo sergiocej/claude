@@ -196,86 +196,59 @@
         (function () {
           "use strict";
 
+          /* === BEATS-INICIO: lo escribe build.mjs, no editar a mano ===
+             B  = inicio local de cada bloque de esta escena
+             BF = fin local de cada bloque
+             D  = duración de la escena
+             W  = [bloque][palabra] -> [inicio, fin] local            */
+          var B = [0.3,4.121];
+          var BF = [3.671,7.961];
+          var D = 9.761;
+          var W = [[[0.3,0.476],[0.476,0.653],[0.653,0.927],[0.927,1.348],[1.348,1.525],[1.525,1.946],[1.946,2.074],[2.074,2.397],[2.397,2.769],[2.769,2.946],[2.946,3.171],[3.171,3.347],[3.347,3.671]],[[4.121,4.778],[4.778,5.038],[5.038,5.582],[5.582,5.786],[5.786,6.273],[6.273,6.987],[6.987,7.19],[7.19,7.961]]];
+          /* === BEATS-FIN === */
+
           var tl = gsap.timeline({ paused: true });
 
           /* ---- Bloque 14 ----
              Es la única vez que el video baja la velocidad a propósito: las
              entradas duran casi el doble que en el resto de la pieza. */
-          tl.fromTo(
-            "#s07-a1",
-            { opacity: 0, y: 24, filter: "blur(16px)" },
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.82, ease: "power2.out" },
-            0.25,
-          );
-          tl.fromTo(
-            "#s07-a2",
-            { opacity: 0, y: 24, filter: "blur(16px)" },
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.82, ease: "power2.out" },
-            1.35,
-          );
-          tl.fromTo(
-            "#s07-a3",
-            { opacity: 0, y: 32, filter: "blur(26px)" },
-            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.95, ease: "power3.out" },
-            2.55,
-          );
+          var pedido = ["#s07-a1", "#s07-a2", "#s07-a3"];
+          var anclas = [0, 4, 11];
+          var fuerza = [
+            { y: 24, blur: 16, dur: 0.82, ease: "power2.out" },
+            { y: 24, blur: 16, dur: 0.82, ease: "power2.out" },
+            { y: 32, blur: 26, dur: 0.95, ease: "power3.out" },
+          ];
+          for (var i = 0; i < pedido.length; i += 1) {
+            var f = fuerza[i];
+            var at = W[0][anclas[i]] ? W[0][anclas[i]][0] : B[0] + i * 1.1;
+            tl.fromTo(
+              pedido[i],
+              { opacity: 0, y: f.y, filter: "blur(" + f.blur + "px)" },
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: f.dur, ease: f.ease },
+              at,
+            );
+          }
 
           /* ---- Bloque 15: el mosaico se aleja ----
              Arranca ampliado, como si el espectador estuviera todavía dentro
              de la última escena, y retrocede hasta que se ven las seis. Las
              miniaturas son capturas reales de las escenas 1 a 6; si una escena
              cambia hay que regenerarlas (assets/mosaico). */
-          tl.to("#s07-light", { opacity: 0, duration: 0.26, ease: "power2.in" }, 4.55);
-          tl.fromTo(
-            "#s07-mosaic",
-            { opacity: 0, scale: 2.5 },
-            { opacity: 1, scale: 1, duration: 1.35, ease: "power3.out" },
-            4.5,
-          );
-          tl.to(
-            "#s07-mosaic",
-            { scale: 0.72, opacity: 0, duration: 0.85, ease: "power2.inOut" },
-            5.95,
-          );
+          var MOS = B[1] - 0.55;
+          tl.to("#s07-light", { opacity: 0, duration: 0.26, ease: "power2.in" }, MOS + 0.05);
+          tl.fromTo("#s07-mosaic", { opacity: 0, scale: 2.5 }, { opacity: 1, scale: 1, duration: 1.3, ease: "power3.out" }, MOS);
+          tl.to("#s07-mosaic", { scale: 0.72, opacity: 0, duration: 0.85, ease: "power2.inOut" }, MOS + 1.45);
 
-          /* ---- La placa ---- */
-          tl.to("#s07-plate", { opacity: 1, duration: 0.4, ease: "power2.out" }, 6.25);
-          tl.fromTo(
-            "#s07-mark",
-            { opacity: 0, scale: 0.84 },
-            { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" },
-            6.3,
-          );
-          tl.fromTo(
-            "#s07-reg",
-            { opacity: 0, y: 14 },
-            { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
-            6.62,
-          );
-          tl.fromTo(
-            "#s07-hair",
-            { scaleX: 0 },
-            { scaleX: 1, duration: 0.6, ease: "power3.out" },
-            6.72,
-          );
-          tl.fromTo(
-            "#s07-cta",
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
-            6.88,
-          );
-          tl.fromTo(
-            "#s07-phone",
-            { opacity: 0, y: 18 },
-            { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" },
-            7.08,
-          );
-          tl.fromTo(
-            "#s07-place",
-            { opacity: 0, y: 14 },
-            { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
-            7.28,
-          );
+          /* ---- La placa, anclada a "La primera orientación" ---- */
+          var PLACA = W[1][3] ? W[1][3][0] - 0.25 : B[1] + 1.6;
+          tl.to("#s07-plate", { opacity: 1, duration: 0.4, ease: "power2.out" }, PLACA);
+          tl.fromTo("#s07-mark", { opacity: 0, scale: 0.84 }, { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" }, PLACA + 0.05);
+          tl.fromTo("#s07-reg", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, PLACA + 0.37);
+          tl.fromTo("#s07-hair", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, PLACA + 0.47);
+          tl.fromTo("#s07-cta", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, PLACA + 0.63);
+          tl.fromTo("#s07-phone", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, PLACA + 0.83);
+          tl.fromTo("#s07-place", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, PLACA + 1.03);
 
           window.__timelines["s07-cierre"] = tl;
           tl.seek(0);

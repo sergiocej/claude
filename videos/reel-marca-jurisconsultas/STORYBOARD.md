@@ -1,6 +1,6 @@
 ---
 format: 1080x1920
-duration: 56.5s
+duration: 55.5s
 message: "Un delito digital se resuelve cuando lo penal y lo técnico trabajan juntos, y a tiempo"
 arc: Corrección de percepción → Escalada → Punto de quiebre → Giro → Prueba → CTA
 audience: "Personas que sufrieron un fraude o delito digital y todavía no denunciaron"
@@ -11,12 +11,16 @@ Los 15 bloques del guion se agrupan en 7 escenas. Las duraciones de abajo son
 estimaciones a 2,6 palabras/seg: **la duración real de la voz manda** y se
 reinyecta por script cuando llegue el audio de ElevenLabs.
 
-Las siete escenas están construidas y animadas. El corte cae en **56,5 s**
-contra los 55 s del brief: 1,5 s de más, dentro del rango de 45 a 60 que se
-pidió, y que la voz real va a corregir en cualquier dirección.
+Las siete escenas están construidas, animadas y **sincronizadas con voz**. El
+corte cae en **55,5 s**, contra los 55 s del brief.
 
-Tiempos en el montaje: 1 → 0 s · 2 → 6,5 s · 3 → 14 s · 4 → 21,5 s ·
-5 → 31,5 s · 6 → 42,5 s · 7 → 48,5 s.
+Los tiempos de abajo ya no son estimaciones: salen de la duración real de cada
+bloque de voz y los calcula `build.mjs`. No editarlos a mano acá — se
+regeneran. Montaje actual: 1 → 0 s · 2 → 6,04 s · 3 → 13,82 s · 4 → 21,48 s ·
+5 → 29,30 s · 6 → 40,36 s · 7 → 45,78 s.
+
+La voz es **descartable** (Kokoro local, español de España). Sirve para probar
+la cadena, no para publicar.
 
 ## Frame 1 — No te hackearon
 
