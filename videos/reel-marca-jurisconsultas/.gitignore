@@ -1,0 +1,5 @@
+# Artefactos regenerables
+snapshots/
+renders/
+node_modules/
+.hyperframes/

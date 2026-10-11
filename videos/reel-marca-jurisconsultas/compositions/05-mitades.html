@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- El runtime descarta este head: todo lo vivo va dentro del <template>. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        /* Blueprint comparison-split, regla split-tilt-cards, adaptada al eje
+           vertical: el lienzo es 9:16, así que la bisagra del libro es
+           horizontal y las mitades giran en rotateX, no en rotateY. Se
+           conserva la firma: entrada desde alas opuestas, inclinaciones
+           espejadas, sombra que cae con la cara, reposo en contrafase. */
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #c9a84c;
+          font-family: Montserrat, sans-serif;
+          perspective: 1600px; /* OBLIGATORIO: sin esto rotateX se aplana */
+          --ink: #111111;
+          --panel: #111111;
+          --panel-fg: #f5f5f5;
+          --accent-soft: #e0bc6a;
+        }
+
+        /* ---------- Capa de fondo ---------- */
+
+        #s05-glow-a,
+        #s05-glow-b {
+          position: absolute;
+          width: 1200px;
+          height: 1200px;
+          margin-left: -600px;
+          margin-top: -600px;
+          border-radius: 50%;
+          will-change: transform;
+        }
+        #s05-glow-a {
+          left: 30%;
+          top: 32%;
+          background: radial-gradient(
+            circle at center,
+            rgba(255, 244, 214, 0.34) 0%,
+            rgba(255, 244, 214, 0) 68%
+          );
+        }
+        #s05-glow-b {
+          left: 70%;
+          top: 70%;
+          background: radial-gradient(
+            circle at center,
+            rgba(90, 60, 10, 0.22) 0%,
+            rgba(90, 60, 10, 0) 68%
+          );
+        }
+
+        /* Decorativo no textual: un anillo, eco del iris que abre la
+           escena 4. Reemplaza a la palabra fantasma, que el auditor leía como
+           texto invisible y como falla de contraste. */
+        #s05-ring {
+          position: absolute;
+          left: 50%;
+          top: 1010px;
+          width: 1250px;
+          height: 1250px;
+          margin-left: -625px;
+          margin-top: -625px;
+          border: 2px solid rgba(17, 17, 17, 0.1);
+          border-radius: 50%;
+          will-change: transform;
+        }
+
+        /* ---------- Título ---------- */
+
+        #s05-title {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 210px;
+          color: var(--ink);
+          font-size: 140px;
+          font-weight: 900;
+          text-transform: lowercase;
+          letter-spacing: -0.04em;
+          line-height: 0.92;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+        #s05-title em {
+          font-style: normal;
+          color: #4a3a0e;
+        }
+
+        /* ---------- Las dos mitades ---------- */
+
+        #s05-stage {
+          position: absolute;
+          left: 50%;
+          top: 1010px;
+          width: 900px;
+          margin-left: -450px;
+          transform-style: preserve-3d;
+        }
+
+        .s05-half {
+          position: absolute;
+          left: 0;
+          width: 900px;
+          height: 396px;
+          padding: 44px 48px;
+          background: var(--panel);
+          border-radius: 10px;
+          transform-style: preserve-3d;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+        /* La sombra cae con la cara: la mitad de arriba mira hacia abajo, su
+           sombra va abajo; la de abajo, al revés. */
+        #s05-tecnica {
+          top: -424px;
+          box-shadow: 0 34px 70px rgba(70, 46, 0, 0.42);
+        }
+        #s05-penal {
+          top: 28px;
+          box-shadow: 0 -34px 70px rgba(70, 46, 0, 0.42);
+        }
+
+        .s05-eyebrow {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 400;
+          font-size: 28px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--accent-soft);
+          opacity: 0;
+        }
+        .s05-headline {
+          margin-top: 14px;
+          color: var(--panel-fg);
+          font-size: 140px;
+          font-weight: 900;
+          letter-spacing: -0.035em;
+          line-height: 0.94;
+          opacity: 0;
+        }
+        .s05-body {
+          margin-top: 16px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 400;
+          font-size: 32px;
+          letter-spacing: 0.01em;
+          color: rgba(245, 245, 245, 0.72);
+          opacity: 0;
+        }
+
+        /* ---------- Credenciales: fuera de los paneles, si no heredan el giro ---------- */
+
+        #s05-creds {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 1560px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 400;
+          font-size: 30px;
+          line-height: 1.5;
+          letter-spacing: 0.02em;
+          color: var(--ink);
+          text-align: center;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+        #s05-creds b {
+          font-weight: 700;
+        }
+        #s05-seam {
+          position: absolute;
+          left: 50%;
+          top: 1006px;
+          width: 520px;
+          height: 2px;
+          margin-left: -260px;
+          transform-origin: center center;
+          background: rgba(17, 17, 17, 0.55);
+          will-change: transform;
+        }
+      </style>
+
+      <div id="root" data-composition-id="s05-mitades" data-width="1080" data-height="1920">
+        <div id="s05-glow-a" data-layout-ignore></div>
+        <div id="s05-glow-b" data-layout-ignore></div>
+        <div id="s05-ring" data-layout-ignore></div>
+
+        <div id="s05-title"><em>dos</em> mitades</div>
+
+        <div id="s05-stage">
+          <div class="s05-half" id="s05-tecnica">
+            <div class="s05-eyebrow">la mitad</div>
+            <div class="s05-headline">técnica</div>
+            <div class="s05-body">registros, trazabilidad, peritaje</div>
+          </div>
+          <div class="s05-half" id="s05-penal">
+            <div class="s05-eyebrow">la mitad</div>
+            <div class="s05-headline">penal</div>
+            <div class="s05-body">prueba, plazos, proceso</div>
+          </div>
+        </div>
+
+        <div id="s05-seam"></div>
+
+        <div id="s05-creds">
+          <b>Abogado especialista en Derecho Penal</b><span> · Maestría en Ciberseguridad</span>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          "use strict";
+
+          var tl = gsap.timeline({ paused: true });
+
+          var TILT = 13;
+          var OVER = 8;
+
+          /* ---- Fondo: dos resplandores en contrafase, nunca sincronizados ---- */
+          tl.fromTo(
+            "#s05-glow-a",
+            { scale: 0.92, opacity: 0.8 },
+            { scale: 1.08, opacity: 1, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: 1 },
+            0,
+          );
+          tl.fromTo(
+            "#s05-glow-b",
+            { scale: 1.08, opacity: 1 },
+            { scale: 0.92, opacity: 0.8, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: 1 },
+            0,
+          );
+          tl.fromTo("#s05-ring", { rotate: 0, scale: 0.99 }, { rotate: -6, scale: 1.02, duration: 11, ease: "none" }, 0);
+
+          /* ---- Escena 1 del blueprint: el título baja a su lugar ---- */
+          tl.fromTo(
+            "#s05-title",
+            { opacity: 0, y: -46 },
+            { opacity: 1, y: 0, duration: 0.78, ease: "power3.out" },
+            0.1,
+          );
+
+          /* ---- Escena 2: la firma. Entrada desde alas opuestas con
+                  inclinaciones espejadas, la de abajo 0,2 s detrás. ---- */
+          tl.fromTo(
+            "#s05-tecnica",
+            { opacity: 0, y: -330, rotateX: TILT + OVER },
+            { opacity: 1, y: 0, rotateX: TILT, duration: 1.05, ease: "power3.out" },
+            0.46,
+          );
+          tl.fromTo(
+            "#s05-penal",
+            { opacity: 0, y: 330, rotateX: -TILT - OVER },
+            { opacity: 1, y: 0, rotateX: -TILT, duration: 1.05, ease: "power3.out" },
+            0.66,
+          );
+
+          /* La costura del medio se dibuja con el aterrizaje. scaleX, no width:
+             las propiedades de layout se enganchan al píxel entero y la cola
+             del ease tiembla bajo la captura cuadro por cuadro. */
+          tl.fromTo(
+            "#s05-seam",
+            { scaleX: 0, opacity: 0 },
+            { scaleX: 1, opacity: 1, duration: 0.7, ease: "power3.out" },
+            1.0,
+          );
+
+          /* La copia sube durante el asentamiento, no después */
+          tl.fromTo(
+            ".s05-eyebrow, .s05-headline, .s05-body",
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.07,
+              ease: "power2.out",
+              immediateRender: false,
+            },
+            1.12,
+          );
+
+          /* ---- Reposo en contrafase: signos opuestos, nunca cinta transportadora ---- */
+          tl.to(
+            "#s05-tecnica",
+            { y: -7, duration: 1.1, ease: "sine.inOut", yoyo: true, repeat: 1 },
+            1.95,
+          );
+          tl.to(
+            "#s05-penal",
+            { y: 7, duration: 1.1, ease: "sine.inOut", yoyo: true, repeat: 1 },
+            1.95,
+          );
+
+          /* ---- Bloque 10: "casi siempre se trabajan por separado".
+                  Las mitades se abren y se desfasan. El desfase se expresa en
+                  el tiempo (duraciones y arranques distintos), no en una
+                  segunda propiedad: y tiene un solo dueño por tramo. ---- */
+          tl.to("#s05-tecnica", { y: -96, duration: 1.5, ease: "power2.inOut" }, 4.25);
+          tl.to("#s05-penal", { y: 104, duration: 2.1, ease: "power2.inOut" }, 4.62);
+          tl.to("#s05-seam", { opacity: 0.2, duration: 1.2, ease: "power1.inOut" }, 4.4);
+          tl.to(
+            "#s05-title",
+            { opacity: 0.32, y: -18, duration: 1.0, ease: "power2.out" },
+            4.3,
+          );
+
+          /* ---- Bloque 11: "acá se trabajan juntas". Encastran. ---- */
+          tl.to("#s05-tecnica", { y: 0, rotateX: 4, duration: 0.92, ease: "power3.inOut" }, 8.45);
+          tl.to("#s05-penal", { y: 0, rotateX: -4, duration: 0.92, ease: "power3.inOut" }, 8.45);
+          tl.to("#s05-seam", { opacity: 1, duration: 0.6, ease: "power2.out" }, 8.9);
+
+          /* El único sobrepaso de la escena: las credenciales puntúan el cierre */
+          tl.fromTo(
+            "#s05-creds",
+            { opacity: 0, scale: 0.86, y: 24 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.72, ease: "back.out(1.9)" },
+            9.35,
+          );
+
+          window.__timelines["s05-mitades"] = tl;
+          tl.seek(0);
+        })();
+      </script>
+    </template>
+  </body>
+</html>

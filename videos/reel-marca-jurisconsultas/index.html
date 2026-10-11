@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
+    <meta name="viewport" content="width=1080, height=1920" />
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
       * {
@@ -12,25 +12,134 @@
       }
       html,
       body {
-        margin: 0;
-        width: 1920px;
-        height: 1080px;
+        width: 1080px;
+        height: 1920px;
         overflow: hidden;
         background: #0a0a0a;
       }
+
       #root {
         width: 100%;
         height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        position: relative;
+        overflow: hidden;
+        /* Tokens de marca — frame.md manda */
+        --bg-dark: #0a0a0a;
+        --bg-dark-2: #111111;
+        --bg-light: #f5f5f5;
+        --accent: #c9a84c;
+        --accent-soft: #e0bc6a;
+        --alert: #8e2a2a;
+        --fg-on-dark: #f5f5f5;
+        --fg-on-light: #111111;
+        /* Tinta del HUD: la cambia la línea de tiempo según el fondo.
+           El alfa también: sobre dorado hace falta más para pasar 3:1. */
+        --hud-ink: 245, 245, 245;
+        --hud-alpha: 0.55;
       }
-      #title {
-        color: #f4f4f5;
-        font-size: 72px;
-        font-weight: 600;
-        letter-spacing: -0.03em;
+
+      /* ---------- HUD: interfaz de técnico, persistente ---------- */
+
+      #hud {
+        position: absolute;
+        inset: 0;
+        z-index: 95;
+        pointer-events: none;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-weight: 400;
+        font-size: 26px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-variant-numeric: tabular-nums;
+        color: rgba(var(--hud-ink), var(--hud-alpha));
+      }
+
+      .hud-readout {
+        position: absolute;
+        white-space: nowrap;
+      }
+      #hud-section {
+        top: 64px;
+        left: 72px;
+      }
+      #hud-clock {
+        top: 64px;
+        right: 72px;
+      }
+      #hud-block {
+        bottom: 64px;
+        right: 72px;
+      }
+      #hud-illus {
+        bottom: 64px;
+        left: 72px;
+        text-transform: none;
+        letter-spacing: 0.04em;
+        opacity: 0;
+      }
+
+      /* Marcas de esquina en L */
+      .hud-corner {
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        border-color: rgba(var(--hud-ink), calc(var(--hud-alpha) * 0.68));
+        border-style: solid;
+        border-width: 0;
+      }
+      .hud-corner.tl {
+        top: 36px;
+        left: 36px;
+        border-top-width: 2px;
+        border-left-width: 2px;
+      }
+      .hud-corner.tr {
+        top: 36px;
+        right: 36px;
+        border-top-width: 2px;
+        border-right-width: 2px;
+      }
+      .hud-corner.bl {
+        bottom: 36px;
+        left: 36px;
+        border-bottom-width: 2px;
+        border-left-width: 2px;
+      }
+      .hud-corner.br {
+        bottom: 36px;
+        right: 36px;
+        border-bottom-width: 2px;
+        border-right-width: 2px;
+      }
+
+      /* ---------- Viñeta y grano, sobre todo ---------- */
+
+      #hf-vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 90;
+        background: radial-gradient(
+          ellipse at center,
+          transparent var(--vignette-size, 60%),
+          var(--vignette-color, rgba(0, 0, 0, 0.52)) 100%
+        );
+      }
+
+      #grain-overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 100;
+      }
+      #grain-overlay .grain-texture {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        opacity: 0.11;
       }
     </style>
   </head>
@@ -39,17 +148,141 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="10"
-      data-width="1920"
-      data-height="1080"
+      data-duration="17.5"
+      data-width="1080"
+      data-height="1920"
     >
-      <h1 id="title" class="clip" data-start="0" data-duration="10" data-track-index="0">Title</h1>
+      <!-- Escena 1 — bloques 1 y 2 -->
+      <div
+        id="escena-1-gancho"
+        class="clip"
+        data-composition-id="s01-hook"
+        data-composition-src="compositions/01-hook.html"
+        data-start="0"
+        data-duration="6.5"
+        data-track-index="0"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <!-- Escena 5 — bloques 9, 10 y 11 -->
+      <div
+        id="escena-5-mitades"
+        class="clip"
+        data-composition-id="s05-mitades"
+        data-composition-src="compositions/05-mitades.html"
+        data-start="6.5"
+        data-duration="11"
+        data-track-index="0"
+        data-width="1080"
+        data-height="1920"
+      ></div>
+
+      <div id="hud">
+        <div class="hud-corner tl"></div>
+        <div class="hud-corner tr"></div>
+        <div class="hud-corner bl"></div>
+        <div class="hud-corner br"></div>
+        <div class="hud-readout" id="hud-section">gancho</div>
+        <div class="hud-readout" id="hud-clock">juris consultas · 00:00:00</div>
+        <div class="hud-readout" id="hud-block">01 / 15</div>
+        <div class="hud-readout" id="hud-illus">datos ilustrativos</div>
+      </div>
+
+      <div id="hf-vignette" data-layout-allow-occlusion></div>
+      <div id="grain-overlay" data-layout-allow-occlusion>
+        <div class="grain-texture"></div>
+      </div>
     </div>
+
     <script>
-      const tl = gsap.timeline({ paused: true });
-      // Example: tl.fromTo("#title", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, 0);
-      window.__timelines["main"] = tl;
-      tl.seek(0);
+      (function () {
+        "use strict";
+
+        var FPS = 30;
+
+        /* Tabla de bloques horneada. Mientras no llegue la voz de ElevenLabs
+           estos tiempos son estimaciones a 2,6 palabras/seg; el script de
+           sincronía los reemplaza con los timestamps reales por carácter. */
+        var BLOCKS = [
+          { t: 0.0, n: 1, section: "gancho", illus: false },
+          { t: 2.5, n: 2, section: "gancho", illus: true },
+          { t: 6.5, n: 9, section: "las dos mitades", illus: false },
+          { t: 10.7, n: 10, section: "las dos mitades", illus: false },
+          { t: 14.9, n: 11, section: "las dos mitades", illus: false },
+        ];
+
+        var elClock = document.getElementById("hud-clock");
+        var elBlock = document.getElementById("hud-block");
+        var elSection = document.getElementById("hud-section");
+        var elIllus = document.getElementById("hud-illus");
+
+        function pad(n, width) {
+          var s = String(Math.floor(n));
+          while (s.length < width) s = "0" + s;
+          return s;
+        }
+
+        /* Estado del HUD como función pura del tiempo de la línea de tiempo.
+           Nada de Date.now(): seek hacia adelante y hacia atrás dan lo mismo. */
+        var lastBlockIndex = -1;
+        function paintHud(t) {
+          var mm = Math.floor(t / 60);
+          var ss = Math.floor(t % 60);
+          var ff = Math.floor((t % 1) * FPS);
+          elClock.textContent =
+            "juris consultas · " + pad(mm, 2) + ":" + pad(ss, 2) + ":" + pad(ff, 2);
+
+          var i = 0;
+          for (var k = BLOCKS.length - 1; k >= 0; k -= 1) {
+            if (t >= BLOCKS[k].t) {
+              i = k;
+              break;
+            }
+          }
+          if (i !== lastBlockIndex) {
+            lastBlockIndex = i;
+            elBlock.textContent = pad(BLOCKS[i].n, 2) + " / 15";
+            elSection.textContent = BLOCKS[i].section;
+            elIllus.style.opacity = BLOCKS[i].illus ? "1" : "0";
+          }
+        }
+
+        var tl = gsap.timeline({ paused: true });
+
+        /* Un solo driver para el HUD: lee el tiempo de la propia línea. */
+        tl.to(
+          { v: 0 },
+          {
+            v: 1,
+            duration: 17.5,
+            ease: "none",
+            onUpdate: function () {
+              paintHud(tl.time());
+            },
+          },
+          0,
+        );
+
+        /* El HUD y la viñeta cambian de color con el fondo de cada escena.
+           Escena 1 es oscura (tinta clara); escena 5 es dorada (tinta oscura). */
+        tl.set("#root", { "--hud-ink": "245, 245, 245", "--hud-alpha": "0.55" }, 0);
+        tl.set("#root", { "--vignette-color": "rgba(0, 0, 0, 0.52)" }, 0);
+        tl.set("#root", { "--hud-ink": "17, 17, 17", "--hud-alpha": "0.78" }, 6.5);
+        tl.set("#root", { "--vignette-color": "rgba(60, 40, 0, 0.3)" }, 6.5);
+
+        /* El grano deriva muy lento, sin azar: desplazamiento derivado del tiempo. */
+        tl.fromTo(
+          "#grain-overlay .grain-texture",
+          { xPercent: 0, yPercent: 0 },
+          { xPercent: -6, yPercent: 4, duration: 17.5, ease: "none" },
+          0,
+        );
+
+        paintHud(0);
+        window.__timelines["main"] = tl;
+        tl.seek(0);
+      })();
     </script>
   </body>
 </html>

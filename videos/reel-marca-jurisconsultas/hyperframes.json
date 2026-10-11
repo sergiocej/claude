@@ -9,5 +9,37 @@
   "media": {
     "autoProxy": true
   },
-  "authoringSkill": "general-video"
+  "authoringSkill": "general-video",
+  "registryItems": [
+    {
+      "name": "grain-overlay",
+      "type": "hyperframes:component",
+      "target": "compositions/components/grain-overlay.html"
+    },
+    {
+      "name": "vignette",
+      "type": "hyperframes:component",
+      "target": "compositions/components/vignette.html"
+    },
+    {
+      "name": "blur-in",
+      "type": "hyperframes:component",
+      "target": "compositions/components/blur-in.html"
+    },
+    {
+      "name": "perspective-marquee",
+      "type": "hyperframes:component",
+      "target": "compositions/components/perspective-marquee.html"
+    },
+    {
+      "name": "telemetry-hud",
+      "type": "hyperframes:component",
+      "target": "compositions/components/telemetry-hud.html"
+    },
+    {
+      "name": "comparison-split",
+      "type": "hyperframes:component",
+      "target": "compositions/components/comparison-split.html"
+    }
+  ]
 }

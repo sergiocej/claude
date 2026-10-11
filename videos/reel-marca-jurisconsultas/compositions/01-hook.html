@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- El runtime descarta este head: todo lo vivo va dentro del <template>. -->
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #0a0a0a;
+          font-family: Montserrat, sans-serif;
+          --accent: #c9a84c;
+          --accent-soft: #e0bc6a;
+          --fg: #f5f5f5;
+        }
+
+        /* ---------- Capa de fondo: dos decorativos con una sola respiración ---------- */
+
+        #s01-glow {
+          position: absolute;
+          left: 50%;
+          top: 40%;
+          width: 1500px;
+          height: 1500px;
+          margin-left: -750px;
+          margin-top: -750px;
+          border-radius: 50%;
+          background: radial-gradient(
+            circle at center,
+            rgba(201, 168, 76, 0.18) 0%,
+            rgba(201, 168, 76, 0.06) 42%,
+            rgba(201, 168, 76, 0) 70%
+          );
+          will-change: transform;
+        }
+
+        /* Decorativo no textual: una mira. Dice "te eligieron" sin escribirlo.
+           Antes acá había una palabra fantasma al 4 % de opacidad; el auditor
+           la trata como texto invisible (text_not_painted) y como falla de
+           contraste, y con razón: 4 % no es texto, es textura. Una forma
+           geométrica cumple la misma función de profundidad y además es más
+           fiel al concepto de la escena. */
+        #s01-target {
+          position: absolute;
+          left: 50%;
+          top: 46%;
+          width: 1340px;
+          height: 1340px;
+          margin-left: -670px;
+          margin-top: -670px;
+          border: 2px solid rgba(245, 245, 245, 0.07);
+          border-radius: 50%;
+          will-change: transform;
+        }
+        #s01-target::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 560px;
+          height: 560px;
+          margin-left: -280px;
+          margin-top: -280px;
+          border: 2px solid rgba(201, 168, 76, 0.1);
+          border-radius: 50%;
+        }
+        .s01-cross {
+          position: absolute;
+          background: rgba(245, 245, 245, 0.05);
+        }
+        #s01-cross-h {
+          left: 0;
+          right: 0;
+          top: 46%;
+          height: 2px;
+        }
+        #s01-cross-v {
+          top: 0;
+          bottom: 0;
+          left: 50%;
+          width: 2px;
+          margin-left: -1px;
+        }
+
+        /* ---------- Bloque 1: el gancho ---------- */
+
+        #s01-hook-text {
+          position: absolute;
+          left: 72px;
+          right: 72px;
+          top: 50%;
+          transform-origin: left center;
+          will-change: transform;
+        }
+
+        .s01-line {
+          display: block;
+          color: var(--fg);
+          font-weight: 900;
+          text-transform: lowercase;
+          letter-spacing: -0.03em;
+          line-height: 0.97;
+        }
+        /* Las palabras animadas se separan con margin, nunca con un espacio:
+           el interletrado negativo se come el espacio. */
+        .s01-word {
+          display: inline-block;
+          margin-right: 0.2em;
+          opacity: 0;
+          will-change: transform, filter, opacity;
+        }
+        .s01-word:last-child {
+          margin-right: 0;
+        }
+
+        #s01-eyebrow {
+          font-size: 96px;
+          color: rgba(245, 245, 245, 0.62);
+        }
+        #s01-hero {
+          font-size: 150px;
+        }
+        #s01-turn {
+          font-size: 118px;
+          color: var(--accent);
+          margin-top: 0.14em;
+        }
+
+        /* ---------- Bloque 2: franjas diagonales de la rutina vigilada ---------- */
+
+        #s01-strips {
+          position: absolute;
+          left: -16%;
+          right: -16%;
+          top: 52%;
+          height: 820px;
+          perspective: 1400px;
+          opacity: 0;
+          will-change: opacity;
+        }
+
+        .s01-strip {
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 132px;
+          display: flex;
+          align-items: center;
+          gap: 28px;
+          white-space: nowrap;
+          transform: rotate(-9deg) rotateX(22deg) translateX(var(--mx, 0px));
+          transform-style: preserve-3d;
+          will-change: transform;
+        }
+        #s01-strip-a {
+          top: 60px;
+        }
+        #s01-strip-b {
+          top: 250px;
+        }
+        #s01-strip-c {
+          top: 440px;
+        }
+
+        .s01-pill {
+          display: inline-block;
+          flex: 0 0 auto;
+          padding: 20px 40px;
+          border: 2px solid rgba(245, 245, 245, 0.16);
+          border-radius: 999px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-weight: 400;
+          font-size: 40px;
+          letter-spacing: 0.02em;
+          color: rgba(245, 245, 245, 0.72);
+          font-variant-numeric: tabular-nums;
+        }
+        .s01-pill.hot {
+          border-color: rgba(201, 168, 76, 0.55);
+          color: var(--accent-soft);
+        }
+      </style>
+
+      <div id="root" data-composition-id="s01-hook" data-width="1080" data-height="1920">
+        <div id="s01-glow" data-layout-ignore></div>
+        <div id="s01-target" data-layout-ignore></div>
+        <div class="s01-cross" id="s01-cross-h" data-layout-ignore></div>
+        <div class="s01-cross" id="s01-cross-v" data-layout-ignore></div>
+
+        <div id="s01-strips" data-layout-allow-overflow data-layout-allow-occlusion data-layout-allow-overlap>
+          <div class="s01-strip" id="s01-strip-a">
+            <span class="s01-pill">08:40 llega al trabajo</span>
+            <span class="s01-pill hot">12:15 almuerza</span>
+            <span class="s01-pill">19:05 vuelve a casa</span>
+            <span class="s01-pill">08:40 llega al trabajo</span>
+            <span class="s01-pill hot">12:15 almuerza</span>
+            <span class="s01-pill">19:05 vuelve a casa</span>
+          </div>
+          <div class="s01-strip" id="s01-strip-b">
+            <span class="s01-pill">contacto frecuente</span>
+            <span class="s01-pill">transferencia habitual</span>
+            <span class="s01-pill hot">banco · app</span>
+            <span class="s01-pill">contacto frecuente</span>
+            <span class="s01-pill">transferencia habitual</span>
+            <span class="s01-pill hot">banco · app</span>
+          </div>
+          <div class="s01-strip" id="s01-strip-c">
+            <span class="s01-pill hot">sábados 21:00 sale</span>
+            <span class="s01-pill">domingo 10:00 gimnasio</span>
+            <span class="s01-pill">pago recurrente</span>
+            <span class="s01-pill hot">sábados 21:00 sale</span>
+            <span class="s01-pill">domingo 10:00 gimnasio</span>
+            <span class="s01-pill">pago recurrente</span>
+          </div>
+        </div>
+
+        <div id="s01-hook-text">
+          <span class="s01-line" id="s01-eyebrow">
+            <span class="s01-word" id="s01-w1">no</span>
+            <span class="s01-word" id="s01-w2">te</span>
+          </span>
+          <span class="s01-line" id="s01-hero">
+            <span class="s01-word" id="s01-w3">hackearon.</span>
+          </span>
+          <span class="s01-line" id="s01-turn">
+            <span class="s01-word" id="s01-w4">te</span>
+            <span class="s01-word" id="s01-w5">eligieron.</span>
+          </span>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          "use strict";
+
+          var tl = gsap.timeline({ paused: true });
+
+          /* ---- Respiración compartida de los decorativos ---- */
+          tl.fromTo(
+            "#s01-glow",
+            { scale: 0.94, opacity: 0.75 },
+            { scale: 1.06, opacity: 1, duration: 3.25, ease: "sine.inOut", yoyo: true, repeat: 1 },
+            0,
+          );
+          tl.fromTo(
+            "#s01-target",
+            { rotate: 0, scale: 0.98 },
+            { rotate: 7, scale: 1.02, duration: 6.5, ease: "none" },
+            0,
+          );
+
+          /* ---- Bloque 1: entrada palabra por palabra con desenfoque ----
+             Receta del componente blur-in del registro, llevada a tamaño de
+             display. El peso de cada palabra fija su tiempo: "hackearon."
+             es el ancla y se toma más tiempo que el resto. */
+          var words = [
+            { sel: "#s01-w1", at: 0.15, dur: 0.4, blur: 16, y: 16 },
+            { sel: "#s01-w2", at: 0.33, dur: 0.4, blur: 16, y: 16 },
+            { sel: "#s01-w3", at: 0.6, dur: 0.58, blur: 26, y: 26 },
+            { sel: "#s01-w4", at: 1.35, dur: 0.4, blur: 16, y: 14 },
+            { sel: "#s01-w5", at: 1.53, dur: 0.52, blur: 22, y: 20 },
+          ];
+          for (var i = 0; i < words.length; i += 1) {
+            var w = words[i];
+            tl.fromTo(
+              w.sel,
+              { opacity: 0, y: w.y, filter: "blur(" + w.blur + "px)" },
+              {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: w.dur,
+                ease: "power3.out",
+              },
+              w.at,
+            );
+          }
+
+          /* ---- La bisagra: el gancho se va arriba y deja el cuadro ---- */
+          tl.fromTo(
+            "#s01-hook-text",
+            { y: 0, scale: 1 },
+            { y: -380, scale: 0.56, duration: 0.72, ease: "power2.inOut" },
+            2.34,
+          );
+          tl.to("#s01-turn", { opacity: 0.4, duration: 0.5, ease: "power1.out" }, 2.5);
+
+          /* ---- Bloque 2: las franjas entran y ruedan en direcciones opuestas ---- */
+          tl.set("#s01-strips", { opacity: 1 }, 2.58);
+
+          /* Una sola propiedad por franja (--mx), así nada pelea por el transform. */
+          tl.fromTo(
+            "#s01-strip-a",
+            { "--mx": "0px" },
+            { "--mx": "-520px", duration: 3.9, ease: "none" },
+            2.58,
+          );
+          tl.fromTo(
+            "#s01-strip-b",
+            { "--mx": "-520px" },
+            { "--mx": "60px", duration: 3.9, ease: "none" },
+            2.58,
+          );
+          tl.fromTo(
+            "#s01-strip-c",
+            { "--mx": "0px" },
+            { "--mx": "-440px", duration: 3.9, ease: "none" },
+            2.58,
+          );
+
+          /* Entrada escalonada de las tres franjas, tope 0,5 s para que se
+             lea como una sola llegada. Solo opacidad: el transform de cada
+             franja ya lo gobierna el CSS a través de --mx, y dos dueños para
+             la misma propiedad es un bug silencioso. */
+          tl.fromTo(
+            ".s01-strip",
+            { opacity: 0 },
+            {
+              opacity: 1,
+              duration: 0.52,
+              stagger: 0.16,
+              ease: "power3.out",
+              immediateRender: false,
+            },
+            2.62,
+          );
+
+          window.__timelines["s01-hook"] = tl;
+          tl.seek(0);
+        })();
+      </script>
+    </template>
+  </body>
+</html>
