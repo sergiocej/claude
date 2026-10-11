@@ -114,6 +114,46 @@
 
       /* ---------- Viñeta y grano, sobre todo ---------- */
 
+      /* ---------- Subtítulos ---------- */
+
+      #captions {
+        position: absolute;
+        left: 72px;
+        right: 72px;
+        bottom: 210px;
+        z-index: 92;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+        opacity: 0;
+      }
+      #cap-plate {
+        max-width: 880px;
+        padding: 20px 36px;
+        border-radius: 14px;
+        background: rgba(10, 10, 10, 0.84);
+        /* Filete: sobre fondo oscuro la placa se funde con el fondo y el
+           subtítulo queda flotando. El borde la sostiene en los tres fondos. */
+        border: 2px solid rgba(245, 245, 245, 0.16);
+        font-family: Montserrat, sans-serif;
+        font-weight: 700;
+        font-size: 56px;
+        line-height: 1.16;
+        letter-spacing: -0.02em;
+        text-align: center;
+        color: rgba(245, 245, 245, 0.62);
+      }
+      #cap-plate .cap-w {
+        display: inline-block;
+        margin-right: 0.26em;
+      }
+      #cap-plate .cap-w:last-child {
+        margin-right: 0;
+      }
+      #cap-plate .cap-w.on {
+        color: #e0bc6a;
+      }
+
       #hf-vignette {
         position: absolute;
         inset: 0;
@@ -233,6 +273,10 @@
 
       <audio id="voz-principal" src="audio/voz.wav" data-start="0"></audio>
 
+      <div id="captions" data-layout-allow-caption-zone>
+        <div id="cap-plate"></div>
+      </div>
+
       <div id="hud">
         <div class="hud-corner tl"></div>
         <div class="hud-corner tr"></div>
@@ -313,6 +357,51 @@
           }
         }
 
+        var capWrap = document.getElementById("captions");
+        var capPlate = document.getElementById("cap-plate");
+        var capTrozo = -2;
+        var capPalabra = -2;
+
+        function paintCaps(t) {
+          var ci = -1;
+          for (var i = 0; i < CAPS.length; i += 1) {
+            if (t >= CAPS[i].a && t < CAPS[i].b) {
+              ci = i;
+              break;
+            }
+          }
+          if (ci !== capTrozo) {
+            capTrozo = ci;
+            capPalabra = -2;
+            if (ci < 0) {
+              capWrap.style.opacity = "0";
+              capPlate.textContent = "";
+            } else {
+              capWrap.style.opacity = "1";
+              capPlate.textContent = "";
+              for (var k = 0; k < CAPS[ci].w.length; k += 1) {
+                var sp = document.createElement("span");
+                sp.className = "cap-w";
+                sp.textContent = CAPS[ci].w[k][0];
+                capPlate.appendChild(sp);
+              }
+            }
+          }
+          if (ci < 0) return;
+          var ws = CAPS[ci].w;
+          var wi = 0;
+          for (var k = 0; k < ws.length; k += 1) {
+            if (t >= ws[k][1]) wi = k;
+          }
+          if (wi !== capPalabra) {
+            capPalabra = wi;
+            var nodos = capPlate.children;
+            for (var k = 0; k < nodos.length; k += 1) {
+              nodos[k].className = k === wi ? "cap-w on" : "cap-w";
+            }
+          }
+        }
+
         var tl = gsap.timeline({ paused: true });
 
         /* Un solo driver para el HUD: lee el tiempo de la propia línea. */
@@ -323,7 +412,9 @@
             duration: 55.539,
             ease: "none",
             onUpdate: function () {
-              paintHud(tl.time());
+              var ahora = tl.time();
+              paintHud(ahora);
+              paintCaps(ahora);
             },
           },
           0,
@@ -331,6 +422,10 @@
 
         /* El HUD y la viñeta cambian de color con el fondo de cada escena.
            Escena 1 es oscura (tinta clara); escena 5 es dorada (tinta oscura). */
+        /* === SUBS-INICIO: lo escribe build.mjs, no editar a mano === */
+        var CAPS = [{"a":2.549,"b":3.935,"w":[["Alguien",2.549],["miró",3.019],["tu",3.325],["rutina",3.521]]},{"a":3.936,"b":4.961,"w":[["y",3.936],["calculó",4.078],["cuánto",4.547]]},{"a":4.962,"b":5.912,"w":[["podía",4.962],["sacarte.",5.323]]},{"a":16.767,"b":18.219,"w":[["Los",16.767],["registros",17.02],["se",17.604],["vencen,",17.802]]},{"a":18.22,"b":20.003,"w":[["las",18.22],["conversaciones",18.474],["se",19.333],["pierden,",19.531]]},{"a":20.004,"b":21.303,"w":[["el",20.004],["dinero",20.203],["se",20.621],["mueve.",20.819]]},{"a":33.35,"b":34.848,"w":[["Casi",33.35],["siempre",33.656],["se",34.127],["trabajan",34.324]]},{"a":34.849,"b":35.624,"w":[["por",34.849],["separado,",35.1]]},{"a":35.625,"b":36.488,"w":[["y",35.625],["el",35.767],["peritaje",35.964]]},{"a":36.489,"b":37.331,"w":[["llega",36.489],["tarde.",36.85]]},{"a":40.613,"b":41.393,"w":[["Y",40.613],["eso",40.75],["cambia",40.993]]},{"a":41.394,"b":42.802,"w":[["el",41.394],["tiempo",41.584],["de",41.985],["reacción.",42.175]]}];
+        /* === SUBS-FIN === */
+
         /* === HUD-INICIO: lo escribe build.mjs, no editar a mano === */
         tl.set("#root", { "--hud-ink": "245, 245, 245", "--hud-alpha": "0.55" }, 0);
         tl.set("#root", { "--vignette-color": "rgba(0, 0, 0, 0.52)" }, 0);
@@ -363,6 +458,7 @@
         );
 
         paintHud(0);
+        paintCaps(0);
         window.__timelines["main"] = tl;
         tl.seek(0);
       })();

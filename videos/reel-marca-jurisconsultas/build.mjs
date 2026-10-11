@@ -76,6 +76,18 @@ const SECCION = {
   15: ["cierre", false],
 };
 
+/**
+ * Bloques que llevan subtítulo. Solo los que la pantalla NO dice ya: repetir
+ * en subtítulo un texto que está en pantalla es ruido, no accesibilidad.
+ *   2  las franjas muestran la rutina vigilada, no la frase
+ *   6  se ve la planilla, no el texto
+ *   10 solo se ven las mitades separándose
+ *   12 se ve el reloj creciendo
+ */
+const BLOQUES_CON_SUBTITULO = [2, 6, 10, 12];
+// El 11 queda afuera a propósito: ahí entran las credenciales, que dicen lo
+// mismo con otras palabras, y el subtítulo se les encima.
+
 /** tinta del HUD según el fondo que haya en pantalla en ese momento */
 const TINTA = {
   clara: { ink: "245, 245, 245", alpha: "0.55", vineta: "rgba(0, 0, 0, 0.52)" },
@@ -263,6 +275,90 @@ for (const e of escenas) {
   reemplazarBeats(join(RAIZ, "compositions", e.archivo), js);
 }
 
+/* --- subtítulos: grupos de 2 o 3 palabras --- */
+
+/** palabras que no pueden quedar al final de un grupo */
+const COLGANTES = new Set([
+  "se", "de", "la", "el", "y", "que", "a", "en", "un", "una", "los", "las",
+  "por", "con", "su", "sus", "al", "del", "lo", "no", "es", "te", "me", "le",
+  "ya", "tu", "tus", "mi", "mis", "para", "como", "o", "ni", "si",
+]);
+
+/**
+ * Trocea un bloque en grupos de 2 a 4 palabras.
+ *
+ * Primero corta por puntuación, que es donde la lectura corta de verdad, y
+ * recién dentro de cada frase por cantidad. Un grupo nunca termina en palabra
+ * funcional: en ese caso se estira una palabra más en lugar de dejarla
+ * colgada.
+ */
+function trocear(palabras) {
+  const limpia = (w) => w.t.toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
+  const cierra = (w) => /[.,;:!?]$/.test(w.t);
+
+  const frases = [];
+  let frase = [];
+  for (const w of palabras) {
+    frase.push(w);
+    if (cierra(w)) {
+      frases.push(frase);
+      frase = [];
+    }
+  }
+  if (frase.length) frases.push(frase);
+
+  const grupos = [];
+  for (const f of frases) {
+    let actual = [];
+    for (let i = 0; i < f.length; i += 1) {
+      actual.push(f[i]);
+      const largo = actual.map((x) => x.t).join(" ").length;
+      const ultima = actual[actual.length - 1];
+      const quedan = f.length - i - 1;
+
+      let cortar = actual.length >= 3 || largo >= 20;
+      if (cortar && quedan > 0 && actual.length < 4 && COLGANTES.has(limpia(ultima))) {
+        cortar = false; // estirar en vez de colgar
+      }
+      if (cortar) {
+        grupos.push(actual);
+        actual = [];
+      }
+    }
+    if (actual.length) {
+      // una sola palabra suelta se pega al grupo anterior de la MISMA frase
+      if (actual.length === 1 && grupos.length && grupos[grupos.length - 1] !== undefined && f.length > 1) {
+        grupos[grupos.length - 1].push(actual[0]);
+      } else {
+        grupos.push(actual);
+      }
+    }
+  }
+  return grupos;
+}
+
+const subtitulos = [];
+for (const n of BLOQUES_CON_SUBTITULO) {
+  const b = bloquePorN[n];
+  for (const grupo of trocear(b.palabras)) {
+    subtitulos.push({
+      a: +grupo[0].inicio.toFixed(3),
+      b: +(grupo[grupo.length - 1].fin + 0.12).toFixed(3),
+      w: grupo.map((x) => [x.t, +x.inicio.toFixed(3)]),
+    });
+  }
+}
+
+/* La cola de 0,12 s no puede invadir el grupo siguiente: el pintor toma el
+   primer grupo que matchea, así que un solape deja el subtítulo viejo en
+   pantalla resaltando la palabra equivocada. */
+subtitulos.sort((x, y) => x.a - y.a);
+for (let i = 0; i < subtitulos.length - 1; i += 1) {
+  if (subtitulos[i].b > subtitulos[i + 1].a) {
+    subtitulos[i].b = +(subtitulos[i + 1].a - 0.001).toFixed(3);
+  }
+}
+
 /* --- index.html --- */
 let idx = readFileSync(join(RAIZ, "index.html"), "utf8");
 
@@ -274,6 +370,11 @@ for (const e of escenas) {
   const re = new RegExp(`(id="${e.host}"[\\s\\S]*?data-start=")[\\d.]+("[\\s\\S]*?data-duration=")[\\d.]+(")`);
   idx = idx.replace(re, `$1${e.inicio}$2${e.duracion}$3`);
 }
+
+idx = idx.replace(
+  /( {8}\/\* === SUBS-INICIO[\s\S]*?\*\/)[\s\S]*?( {8}\/\* === SUBS-FIN === \*\/)/,
+  `$1\n        var CAPS = ${JSON.stringify(subtitulos)};\n$2`,
+);
 
 const filas = bloques
   .map((b) => {
@@ -318,4 +419,7 @@ for (const e of escenas) {
     `  ${e.id.padEnd(14)} ${String(e.inicio).padStart(6)} s  +${String(e.duracion).padStart(5)} s   bloques ${e.bloques.join(", ")}`,
   );
 }
-console.log("\nalineación → audio/alineacion.json");
+console.log(
+  `\nsubtítulos: ${subtitulos.length} grupos en los bloques ${BLOQUES_CON_SUBTITULO.join(", ")}`,
+);
+console.log("alineación → audio/alineacion.json");

@@ -256,16 +256,19 @@
           var ZOOM_DUR = 1.5;
           tl.to("#s03-zoom-outer", { scale: 7.2, duration: ZOOM_DUR, ease: "power3.inOut" }, ZOOM_AT);
           tl.to("#s03-zoom-inner", { x: 0, y: 0, duration: ZOOM_DUR, ease: "power3.inOut" }, ZOOM_AT);
-          tl.to("#s03-bubble", { opacity: 0, duration: 0.5, ease: "power2.in" }, ZOOM_AT + 0.78);
-          tl.to("#s03-title", { opacity: 0, duration: 0.45, ease: "power2.in" }, ZOOM_AT + 0.3);
+          /* La burbuja tiene que desaparecer ANTES de que llegue la planilla: a
+             7,2x su texto ocupa el cuadro entero y, aunque esté atenuado, se
+             superpone con las filas y no se entiende nada. */
+          tl.to("#s03-bubble", { opacity: 0, duration: 0.38, ease: "power2.in" }, ZOOM_AT + 0.52);
+          tl.to("#s03-title", { opacity: 0, duration: 0.4, ease: "power2.in" }, ZOOM_AT + 0.22);
 
           /* Del otro lado de la burbuja está la planilla */
-          tl.fromTo("#s03-sheet", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, ZOOM_AT + 1.08);
+          tl.fromTo("#s03-sheet", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, ZOOM_AT + 1.0);
           tl.fromTo(
             ".s03-row",
             { opacity: 0, y: 26 },
             { opacity: 1, y: 0, duration: 0.42, stagger: 0.07, ease: "power3.out", immediateRender: false },
-            ZOOM_AT + 1.16,
+            ZOOM_AT + 1.08,
           );
 
           /* ---- Las filas se desarman en partículas que viajan a un punto ----
